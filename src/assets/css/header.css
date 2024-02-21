@@ -1,0 +1,11 @@
+#div-header{
+    background-color: black;
+    padding: 3%;
+}
+
+#title-header{
+    color: white;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}

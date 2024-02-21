@@ -1,0 +1,4 @@
+.manageProduct-father{
+    display: flex;
+    flex-direction: row;
+}

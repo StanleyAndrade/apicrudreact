@@ -133,11 +133,10 @@ const ManageProduct = () => {
     return(
       <div className="manageProduct-father"> 
             <div>
-
-              <h1>Editar produtos</h1>
+              <h1 className="title-manageProduct">Seus produtos</h1>
               {/* Dropdown de Categorias */}
-              <select value={selectedCategory} onChange={handleCategoryChange}>
-                <option value="">Todas as Categorias</option>
+              <select value={selectedCategory} onChange={handleCategoryChange} className="select-categorias-manageProduct">
+                <option value="" className="option-categorias-manageProduct">Todas as Categorias</option>
                 {categories.map(category => (
                   <option key={category._id} value={category._id}>{category.nome}</option>
                 ))}
@@ -146,30 +145,38 @@ const ManageProduct = () => {
               {categories.map(category => (
                 <div key={category._id}>
                   <h2>{category.nome}</h2>
-                  {products.filter(product => product.categoria === category._id)
-                  .map((product) => (
-                    <div key={product._id}>
-                      <p>{product.nome}</p>
-                      <p>{product.descricao}</p>
-                      <p>R${product.preco}</p>
-                      <div>
-                        <ul style={{ listStyleType: 'none', padding: 0 }}>
-                          {product.tamanhos.map((tamanho, index) => (
-                            <li key={index}>{tamanho}</li>
-                          ))}
-                        </ul>
+
+                  <div className="product-container">
+                    {products.filter(product => product.categoria === category._id)
+                    .map((product, index) => (
+
+                      <div key={product._id} className="product-item">
+                        <p>{product.nome}</p>
+                        <p>{product.descricao}</p>
+                        <p>R${product.preco}</p>
+                        <div>
+                          <ul style={{ listStyleType: 'none', padding: 0 }}>
+                            {product.tamanhos.map((tamanho, index) => (
+                              <li key={index}>{tamanho}</li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div>
+                          <ul style={{ listStyleType: 'none', padding: 0 }}>
+                            {product.sabores.map((sabor, index) => (
+                              <li key={index}>{sabor}</li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div className="div-buttons-manageProduct">
+                          <button onClick={() => openEditForm(product)} className="editButton-manageProduct">Editar</button>
+                          <button onClick={() => deleteProduct(product._id)} className="deleteButton-manageProduct">Apagar</button>
+                        </div>
                       </div>
-                      <div>
-                        <ul style={{ listStyleType: 'none', padding: 0 }}>
-                          {product.sabores.map((sabor, index) => (
-                            <li key={index}>{sabor}</li>
-                          ))}
-                        </ul>
-                      </div>
-                      <button onClick={() => openEditForm(product)}>Editar</button>
-                      <button onClick={() => deleteProduct(product._id)}>Apagar</button>
-                    </div>
-                  ))}
+                      
+                    ))}
+                  </div>
+
                 </div>
               ))}
             </div>

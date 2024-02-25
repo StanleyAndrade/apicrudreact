@@ -38,11 +38,12 @@ const Dashboard = () => {
         <div>
             <div className="div-dashboard">
                 <Account/>
-                <CreateProduct/>
-                <CreateCategoria/>
                 <ManageProduct/>
-                <UploadImage/>
-                <ImageDelete/>
+                <div className="div-createProduto-categoria-dashboard">
+                    <CreateProduct/>
+                    <CreateCategoria/>
+                </div>
+                
             </div>
         </div>
     )

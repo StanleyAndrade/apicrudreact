@@ -52,26 +52,28 @@ const Account = () => {
     }
 
     return (
-        <div className="account">
-            <h1>Meus Dados</h1>
+        <div className="father-account">
             {userData && !isEditing && (
-                <div>
-                    <p>Nome: {userData.name}</p>
-                    <p>Endereço: {userData.endereco}</p>
-                    <p>Telefone: {userData.phone}</p>
-                    <p>Email: {userData.email}</p>
-                    <p>Horário: {userData.time}</p>
+                <div className="menu-account">
+                    <h2 className="name-account"><b></b>{userData.name}</h2>
+                    <p><b>Endereço:</b> <br/>{userData.endereco}</p>
+                    <p><b>Telefone:</b> <br/>{userData.phone}</p>
+                    <p><b>Email:</b> <br/>{userData.email}</p>
+                    <p><b>Horário de Funcionamento</b>: <br/>{null}</p>
+                    <p><b>Tempo de entrega:</b> <br/>{userData.time}</p>
                     
                     <div>
-                    <p>Forma de Pagamento:</p>
+                    <p><b>Forma de Pagamento:</b></p>
                         <ul style={{ listStyleType: 'none', padding: 0 }}>
                             {userData.payment.map((pagamento, index) => (
                             <li key={index}>{pagamento}</li>
                             ))}
                         </ul>
                     </div>
-                    <p>Nome da Pessoa: {userData.nameperson}</p>
-                    <button onClick={handleEditButtonClick}>Editar</button>
+                    <p><b>Proprietário:</b> <br/>{userData.nameperson}</p>
+                    <div className="div-editButton-account">
+                        <button onClick={handleEditButtonClick} className="editButton-account">Editar</button>
+                    </div>
                 </div>
             )}
             {isEditing && (

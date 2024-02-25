@@ -1,5 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import ImageUpload from "../s3/upload_s3";
+import ImageDelete from "../s3/delete_s3";
 
 const CreateProduct = () => {
     const [newProduct, setNewProduct] = useState({
@@ -9,14 +11,36 @@ const CreateProduct = () => {
         sabores: '',
         preco: '',
         userid: '',
+        imageUrl: '',
+        imageKey: '',
         categoria: '',
     });
 
     const [showFormCreate, setShowFormCreate] = useState(false);
     const [categories, setCategories] = useState([]);
 
-    const createProduct = (event) => {
-        event.preventDefault();
+    const handleImageUrlChange = (url) => {
+        setNewProduct((prevProduct) => ({
+            ...prevProduct,
+            imageUrl: url,
+        }));
+    };
+        
+    const handleImageKeyChange = (key) => {
+        setNewProduct((prevProduct) => ({
+            ...prevProduct,
+            imageKey: key,
+        }));
+    };
+    
+
+    useEffect(() => {
+        if (newProduct.imageUrl !== '' && newProduct.imageKey !== '') {
+            createProduct();
+        }
+    }, [newProduct.imageUrl, newProduct.imageKey]);
+
+    const createProduct = () => {
         axios.post('http://localhost:8080/api/produtos', newProduct)
             .then(() => {
                 setNewProduct({
@@ -26,6 +50,8 @@ const CreateProduct = () => {
                     sabores: '',
                     preco: '',
                     userid: '', 
+                    imageUrl: '',
+                    imageKey: '',
                     categoria: '',
                 });
                 console.log('Produto cadastrado com sucesso');
@@ -52,8 +78,14 @@ const CreateProduct = () => {
     return (
         <div>
             {showFormCreate ? (
-                <form onSubmit={createProduct}>
+                <form>
                     <h2>Cadastrar produto</h2>
+                    <div>
+                        <ImageUpload onImageUrlChange={handleImageUrlChange} onImageKeyChange={handleImageKeyChange} />
+                    </div>
+                    <div>
+                        <ImageDelete/>
+                    </div>
                     <label htmlFor="nome">Nome do Produto: </label>
                     <input
                         type="text"
@@ -112,10 +144,10 @@ const CreateProduct = () => {
                         ))}
                     </select><br />
 
-                    <button type="submit">Cadastrar Produto</button>
+                    <button type="button" onClick={createProduct}>Cadastrar Produto</button>
                 </form>
             ) : ( 
-                <button onClick={() => setShowFormCreate(true)}>Novo produto</button>
+                <button onClick={() => setShowFormCreate(true)} className="createProductButton-account">Novo produto</button>
             )}
         </div>
     );

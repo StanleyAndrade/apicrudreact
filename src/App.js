@@ -1,9 +1,12 @@
 //CSS
-import '../src/assets/css/header.css'
 import '../src/assets/css/home.css'
 import '../src/assets/css/login.css'
 import '../src/assets/css/dashboard.css'
 import '../src/assets/css/manageProduct.css'
+import '../src/assets/css/account.css'
+import '../src/assets/css/createProduct.css'
+import '../src/assets/css/createCategoria.css'
+import '../src/assets/css/upload_s3.css'
 
 // Product
 //import ManageProduct from './assets/js/product/manageProduct';

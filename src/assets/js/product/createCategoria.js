@@ -45,7 +45,7 @@ const CreateCategoria = () => {
             <button type="submit">Cadastrar Categoria</button>
             </form>
             ) : ( 
-            <button onClick={() => setShowFormCreate(true)}>Nova Categoria</button>
+            <button onClick={() => setShowFormCreate(true)} className="createCategoryButton-account">Nova Categoria</button>
             )}
       </div>
       )

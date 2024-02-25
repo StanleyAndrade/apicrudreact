@@ -91,6 +91,7 @@ const ListProductNew = () => {
             .filter(product => product.categoria === category._id)
             .map((product) => (
               <div key={product._id}>
+                <p>{product.imageUrl}</p>
                 <p>{product.nome}</p>
                 <p>{product.descricao}</p>
                 <p>R${product.preco}</p>

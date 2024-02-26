@@ -40,10 +40,11 @@ const LoginUserStore = () => {
                         <h2 className="login">LOGIN</h2>
                         <p>Não tem conta? <Link to="/criar-conta"><b>Criar conta</b></Link>
                         </p>
-                        <form>
+                        <form className="form-loginUserStore">
                             <div className="textfield">
-                                <label>Email
+                                <label className="label-loginUserStore">Email
                                     <input 
+                                    className="input-loginUserStore"
                                     type="text" 
                                     name="email" 
                                     placeholder="Email"
@@ -51,8 +52,9 @@ const LoginUserStore = () => {
                                 </label>
                             </div>
                             <div className="textfield">
-                                <label>Senha
+                                <label className="label-loginUserStore">Senha
                                     <input 
+                                    className="input-loginUserStore"
                                     type="text" 
                                     name="senha" 
                                     placeholder="Senha"

@@ -9,7 +9,6 @@ import Account from "./account";
 import ListProductNew from "../product/listProductNew";
 import CreateCategoria from "../product/createCategoria";
 import UploadImage from "../s3/upload_s3";
-import ImageDelete from "../s3/delete_s3";
 
 const Dashboard = () => {
     // const [message, setMessage] = useState('');

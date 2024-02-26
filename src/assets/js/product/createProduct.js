@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import ImageUpload from "../s3/upload_s3";
-import ImageDelete from "../s3/delete_s3";
+
 
 const CreateProduct = () => {
     const [newProduct, setNewProduct] = useState({
@@ -34,11 +34,11 @@ const CreateProduct = () => {
     };
     
 
-    useEffect(() => {
-        if (newProduct.imageUrl !== '' && newProduct.imageKey !== '') {
-            createProduct();
-        }
-    }, [newProduct.imageUrl, newProduct.imageKey]);
+    // useEffect(() => {
+    //     if (newProduct.imageUrl !== '' && newProduct.imageKey !== '') {
+    //         createProduct();
+    //     }
+    // }, [newProduct.imageUrl, newProduct.imageKey]);
 
     const createProduct = () => {
         axios.post('http://localhost:8080/api/produtos', newProduct)
@@ -76,76 +76,87 @@ const CreateProduct = () => {
     }, []);
 
     return (
-        <div>
+        <div >
             {showFormCreate ? (
-                <form>
-                    <h2>Cadastrar produto</h2>
+                <div className="father-createProduct">
+                    <form >
+                    <h3 className="title-createProduct">Cadastrar produto</h3>
                     <div>
                         <ImageUpload onImageUrlChange={handleImageUrlChange} onImageKeyChange={handleImageKeyChange} />
                     </div>
-                    <div>
-                        <ImageDelete/>
-                    </div>
-                    <label htmlFor="nome">Nome do Produto: </label>
+                    <br/>
+
+                    <label htmlFor="nome" className="labelnome-createProduct">Nome do Produto</label><br/>
                     <input
                         type="text"
+                        className="inputtext-createProduct"
                         id="nome"
                         required
                         value={newProduct.nome}
                         onChange={(e) => setNewProduct({ ...newProduct, nome: e.target.value })}
                     /><br />
 
-                    <label htmlFor="descricao">Descrição: </label>
+                    <label htmlFor="descricao" className="labelnome-createProduct">Descrição</label>
+                    <br/>
                     <input
                         type="text"
+                        className="inputtext-createProduct"
                         id="descricao"
-                        placeholder="Opcional"
+                        placeholder="(opcional)"
                         value={newProduct.descricao}
                         onChange={(e) => setNewProduct({ ...newProduct, descricao: e.target.value })}
                     /><br />
 
-                    <label htmlFor="preco">Preço: </label>
+                    <label htmlFor="preco" className="labelnome-createProduct">Preço</label>
+                    <br/>
                     <input
                         type="text"
+                        className="inputtext-createProduct"
                         id="preco"
                         required
                         value={newProduct.preco}
                         onChange={(e) => setNewProduct({ ...newProduct, preco: e.target.value })}
                     /><br />
 
-                    <h5>Informações Opcionais</h5>
-
-                    <label htmlFor="tamanhos">Tamanhos: </label>
+                    <label htmlFor="tamanhos" className="labelnome-createProduct">Tamanho: - <b>Mais de 1 tamanho, separar por vígula</b> "," </label>
+                    <br/>
                     <input
                         type="text"
+                        className="inputtext-createProduct"
                         id="tamanhos"
                         value={newProduct.tamanhos}
                         onChange={(e) => setNewProduct({ ...newProduct, tamanhos: e.target.value.split(',') })}
                     /><br />
 
-                    <label htmlFor="tamanhos">Sabores: </label>
-                    
+                    <label htmlFor="tamanhos" className="labelnome-createProduct">Sabores - <b>Mais de 1 sabor, separar por vígula</b> "," </label>
+                    <br/>
                     <input
                         id="sabores"
-                        placeholder="Separe por vírgula. Ex.: chocolate, morango, uva"
+                        className="inputtext-createProduct"
+                        placeholder="Ex.: Chocolate, morango"
                         value={newProduct.sabores}
                         onChange={(e) => setNewProduct({ ...newProduct, sabores: e.target.value.split(',') })}
-                    /><br/>
+                    /><br/><br/>
 
-                    <label htmlFor="categoria">Categoria: </label>
-                    <select
-                        id="categoria"
-                        value={newProduct.categoria}
-                        onChange={(e) => setNewProduct({ ...newProduct, categoria: e.target.value })}
-                    >
-                        <option value="">Selecione uma categoria</option>
-                        {categories.map(category => (
-                            <option key={category._id} value={category._id}>{category.nome}</option>
-                        ))}
-                    </select><br />
+                    <div className="div-categoria-e-createButton-createProduct">
+                        <label htmlFor="categoria" className="labelnome-createProduct">Categoria: </label>
+                        
+                        <select
+                            id="categoria"
+                            className="select-categorias-createProduct"
+                            value={newProduct.categoria}
+                            onChange={(e) => setNewProduct({ ...newProduct, categoria: e.target.value })}
+                        >
+                            <option value="" className="option-categorias-createProduct">Selecione uma categoria</option>
+                            {categories.map(category => (
+                                <option key={category._id} value={category._id}>{category.nome}</option>
+                            ))}
+                        </select><br />
 
-                    <button type="button" onClick={createProduct}>Cadastrar Produto</button>
+                        <button type="button" onClick={createProduct} className="createButton-createProduct">Cadastrar Produto</button>
+                    </div>
                 </form>
+                </div>
             ) : ( 
                 <button onClick={() => setShowFormCreate(true)} className="createProductButton-account">Novo produto</button>
             )}

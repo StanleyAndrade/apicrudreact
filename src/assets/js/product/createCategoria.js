@@ -31,19 +31,24 @@ const CreateCategoria = () => {
       return (
         <div>
             {showFormCreate ? (            
-            <form onSubmit={createCategoria}>
-            <h2>Cadastrar Categoria</h2>
-            <label htmlFor="nome">Nome da categoria: </label>
-            <input
-            type="text"
-            id="nome"
-            required
-            value={newCategoria.nome}
-            onChange={(e) => setNewCategoria({ ...newCategoria, nome: e.target.value })}
-            /><br />
+            <div className="father-createCategoria">
+              <form onSubmit={createCategoria}>
+              <h3 className="title-createCategoria">Cadastrar Categoria</h3>
+              <label htmlFor="nome" className="labelnome-createCategoria">Nome da categoria: </label>
+              <input
+              type="text"
+              className="inputtext-createCategoria"
+              id="nome"
+              required
+              value={newCategoria.nome}
+              onChange={(e) => setNewCategoria({ ...newCategoria, nome: e.target.value })}
+              /><br />
 
-            <button type="submit">Cadastrar Categoria</button>
-            </form>
+              <div className="div-createButton-createCategoria">
+                <button type="submit" className="createButton-createCategoria">Cadastrar Categoria</button>
+              </div>
+              </form>
+            </div>
             ) : ( 
             <button onClick={() => setShowFormCreate(true)} className="createCategoryButton-account">Nova Categoria</button>
             )}

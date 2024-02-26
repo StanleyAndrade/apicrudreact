@@ -130,6 +130,8 @@ const ManageProduct = () => {
     }
     //*===================== DELETE =====================*
 
+
+
     return(
       <div className="manageProduct-father"> 
             <div>
@@ -151,6 +153,7 @@ const ManageProduct = () => {
                     .map((product, index) => (
 
                       <div key={product._id} className="product-item">
+                        <img src={product.imageUrl} className="img-product-manageProduct"/>
                         <p>{product.nome}</p>
                         <p>{product.descricao}</p>
                         <p>R${product.preco}</p>

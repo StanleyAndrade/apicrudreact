@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import CreateProduct from '../product/createProduct';
 
 function ImageUpload({ onImageUrlChange, onImageKeyChange }) {
     const [selectedFile, setSelectedFile] = useState(null);
     const [imageUrl, setImageUrl] = useState('');
     const [imageKey, setImageKey] = useState('');
-
-    const handleFileChange = (event) => {
-        setSelectedFile(event.target.files[0]);
-    };
+    const [message, setMessage] = useState(''); 
 
     const handleImageUpload = async () => {
         try {
@@ -27,12 +23,14 @@ function ImageUpload({ onImageUrlChange, onImageKeyChange }) {
 
             // Atualiza os estados
             setImageUrl(getimageUrl);
-            setImageKey(getimageKey);
+            setImageKey(getimageKey)
+            
 
-            // Novas linhas para jogar o valor das variaveis para o outro arquivo js:
+            /// Chama a função de callback para passar a chave da imagem para o componente pai
             if (onImageUrlChange) {
                 onImageUrlChange(getimageUrl);
             }
+            // Chama a função de callback para passar a chave da imagem para o componente pai
             if (onImageKeyChange) {
                 onImageKeyChange(getimageKey);
             }
@@ -44,15 +42,39 @@ function ImageUpload({ onImageUrlChange, onImageKeyChange }) {
         }
     };
 
+    const handleFileChange = (event) => {
+        setSelectedFile(event.target.files[0]);
+        // setTimeout(() => {
+        //     handleImageUpload();
+        // }, 3000); // 3000 milissegundos = 3 segundos
+    };
+
+    const deleteImage = async () => {
+        try {
+            const response = await axios.delete(`http://localhost:8080/delete/${imageKey}`);
+            console.log('Imagem deletada com sucesso')
+            setMessage('Imagem deletada com sucesso');
+            setImageUrl('')
+        } catch (error) {
+            console.error('Erro ao deletar imagem:', error);
+            setMessage('Erro ao deletar imagem');
+        }
+    }
+    
+
     return (
-        <div>
-            <h4>Upload de Imagem para Amazon S3</h4>
-            <input type="file" onChange={handleFileChange} />
-            <button onClick={handleImageUpload} disabled={!selectedFile}>Enviar Imagem</button>
+        <div className='father-upload_s3'>
+            <label htmlFor="fileUpload">Escolher imagem do produto</label>
+            <input type="file" onChange={handleFileChange} accept="image/*" className='fileUpload-upload_s3'/>
+
+            
+
             {imageUrl && <img src={imageUrl} alt="Imagem Enviada" className='img-upload_s3' />} {/* Exibe a imagem se houver um link */}
-            <p>Chave da Imagem: {imageKey}</p> {/* Exibe a chave da imagem */}
+            <div>
+                <button onClick={handleImageUpload} disabled={!selectedFile}>Enviar imagem</button>
+                <button onClick={deleteImage}>Deletar Imagem</button>
+            </div>
         </div>
     );
 }
-
 export default ImageUpload;

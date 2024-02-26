@@ -1,3 +1,21 @@
+.father-upload_s3{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #583002;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    padding: 10px 20px;
+    font-weight: 600;
+}
+
 .img-upload_s3{
     width: 150px;
+    min-width: 200px; /* Define uma largura mínima para os itens */
+    max-width: 30%; /* Define uma largura máxima para os itens */
+    flex-grow: 1; /* Permite que os itens cresçam para ocupar o espaço disponível */
+    border-radius: 5px;
 }

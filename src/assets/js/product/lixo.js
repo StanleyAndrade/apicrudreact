@@ -1,18 +1,12 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
-import ImageUpload from "../s3/upload_s3";
 
 const ManageProduct = () => {
     
-    const [products, setProducts] = useState([]); // Armazena os dados do produto
-    const [categories, setCategories] = useState([]); // Armazena dados da categoria
-    const [selectedCategory, setSelectedCategory] = useState(""); // Categoria selecionada
-    const [imageKey, setImageKey] = useState('') //armazena key da imagem
-    const [imageUrl, setImageUrl] = useState('') //armazena Url da imagem
-    const [editingProductId, setEditingProductId] = useState(null); //recebe o id do produto que está sendo editado e serve pra abrir e fechar o formulário
-    const [editingProduct, setEditingProduct] = useState(null) // Estado que oculta e exibe o formulário
-    const [selectedFile, setSelectedFile] = useState(null); //armazena o arquivo do upload
-    const [editedProduct, setEditedProduct] = useState({ // Estado que armazena os dados edicados
+    const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState("");
+    const [editedProduct, setEditedProduct] = useState({
       nome: '',
       descricao: '',
       tamanhos: '',
@@ -24,9 +18,11 @@ const ManageProduct = () => {
       categoria: '',
     })
 
-    // Função que fecha o formulário de edição quando clica em "cancelar"
+    const [isEditing, setIsEditing] = useState(false); 
+    const [editingProductId, setEditingProductId] = useState();
+
     const handleCancelButtonClick = () => {
-      setEditingProductId(false)
+        setIsEditing(false)
     }
 
     // Função para buscar todos os produtos
@@ -34,26 +30,22 @@ const ManageProduct = () => {
       try {
         const response = await axios.get(`http://localhost:8080/api/produtos`)
         setProducts(response.data)
-        //console.log('Sucesso ao buscar produtos no MongoDB')
       } catch (error) {
-        console.error('Erro ao buscar produtos no MongoDB', error)
+        console.error('Erro ao buscar produtos', error)
       }
     }
 
-    // Função que busca produtos por categoria
     const getProductsByCategory = async (categoryId) => {
       try {
         if (categoryId) {
           const response = await axios.get(`http://localhost:8080/produtos/${categoryId}`);
           setProducts(response.data);
-          console.log('Sucesso ao buscar produtos por categoria no MongoDB')
         } else {
           const response = await axios.get('http://localhost:8080/api/produtos');
           setProducts(response.data);
-          console.log('Sucesso 2 ao buscar produtos por categoria no MongoDB')
         }
       } catch (error) {
-        console.error("Erro ao buscar produtos por categoria no MongoDB", error)
+        console.error("Erro ao buscar produtos por categoria", error)
       }
     };
 
@@ -62,13 +54,11 @@ const ManageProduct = () => {
       try {
         const response = await axios.get('http://localhost:8080/categorias')
         setCategories(response.data)
-        //console.log('Sucesso ao buscar categorias no MongoDB')
       } catch (error) {
-        console.error("Erro ao buscar categorias no MongoDB", error)
+        console.error("Erro ao buscar categorias", error)
       }
     }
 
-    // Realiza a chamada das funções
     useEffect(() => {
         // Realize a chamada para buscar os produtos quando o componente for montado.
         getAllCategories()
@@ -81,7 +71,30 @@ const ManageProduct = () => {
       getProductsByCategory(event.target.value)
     }
 
+    //*===================== Carrinho - coloca no model Pedidos =====================*
+    const addToCart = (productNome, productDescricao, productTamanhos, productSabores, productPreco) => {
+    axios.post('http://localhost:8080/pedidos', {
+        nome: productNome,
+        descricao: productDescricao,
+        tamanhos: productTamanhos,
+        sabores: productSabores,
+        preco: productPreco,
+    })
+    .then((response) => {
+        console.log(response.data);
+    })
+    .catch((error) => {
+        console.error('Erro ao adicionar ao carrinho', error)
+    })
+    };
+    //*===================== Carrinho - coloca no model Pedidos =====================*
+
+
+    //oculta e exibe o formulário
+    const [editingProduct, setEditingProduct] = useState(null)
+
     //*===================== PATCH =====================*
+    //consumindo API
     const editProduct = (event) => {
       event.preventDefault()
       axios.patch(`http://localhost:8080/api/produtos/${editingProduct._id}`, editedProduct)
@@ -99,11 +112,9 @@ const ManageProduct = () => {
         imageKey: '',
         categoria: '',
       })
-      setEditingProductId(false)
-      console.log('Sucesso ao atualizar produto no MongoDB', response.data)
       })
       .catch((error) => {
-        console.error('Erro ao atualizar produto no MongoDB: ', error)
+        console.error('Erro ao atualizar produto: ', error)
       })
     }
 
@@ -117,99 +128,35 @@ const ManageProduct = () => {
           tamanhos: product.tamanhos,
           sabores: product.sabores,
           preco: product.preco,
-          imageUrl: product.imageUrl,
-          imageKey: product.imageKey, // Preenche o campo da chave da imagem
         })
-        const getimageUrl = product.imageUrl
-        const getimageKey = product.imageKey
-        setImageUrl(getimageUrl) // passa a url do MongoDB para a "imageUrl"
-        setImageKey(getimageKey) // passa a key do MongoDB para a "imageKey"
+        setIsEditing(true);
         setEditingProductId(product._id); // Armazena o ID do produto que está sendo editado
+        
+        console.log('Onde está ' + editingProductId)
       }
     }
+    
     //*===================== PATCH =====================*
 
-    //*===================== Patch da Image no MongoDB =====================*
-    const editImageProduct = async (url, key) => {
-      try {
-        const response = await axios.patch(`http://localhost:8080/api/produtos/${editingProduct._id}`, {
-          imageUrl: url,
-          imageKey: key
-        })
-        console.log('Sucesso ao atualizar Imagem (url e key) no MongoDB')
-      } catch (error) {
-        console.log('Erro ao atualizar imagem (url e key) no MongoDB', error)
-      }
-    }
-    //*===================== Patch da Image no MongoDB =====================*
 
 
-    //*===================== DELETE - Product =====================*
+    //*===================== DELETE =====================*
     const deleteProduct = (productId) => {
       axios.delete(`http://localhost:8080/api/produtos/${productId}`)
       .then(() => {
         getAllProducts()
-        console.log('Sucesso ao apagar produto no MongoDB')
       })
       .catch((error) => {
-        console.error('Erro ao apagar produto do MongoDB: ', error)
+        console.error('Erro ao apagar produto: ', error)
       })
     }
-    //*===================== DELETE - Product =====================*
-
-
-
-    //*===================== DELETE - Image =====================*
-    const deleteImage = async () => {
-      try {
-        const response = await axios.delete(`http://localhost:8080/delete/${imageKey}`)
-        setImageUrl('')
-        setImageKey('')
-        editImageProduct('', '')
-        console.log('Sucesso ao apagar imagem no Amazon S3')
-      } catch (error) {
-        console.error("Erro ao apagar imagem no Amazon S3", error)
-      }
-    }
-    //*===================== DELETE - Image =====================*
-
-    //*===================== UPLOAD da Image no S3 =====================*
-    const handleImageUpload = async () => {
-      try {
-        // Apaga a imagem atual
-        deleteImage()
-
-          // Faz o Upload da imagem
-          try {
-            const formData = new FormData()
-            formData.append('file', selectedFile)
-            const response = await axios.post('http://localhost:8080/upload', formData, {
-                    headers: {'Content-Type': 'multipart/form-data',}
-            });
-            const newImageUrl = response.data.imageUrl
-            const newImageKey = response.data.imageKey
-            setImageUrl(newImageUrl)
-            setImageKey(newImageKey)
-            editImageProduct(newImageUrl, newImageKey) // Envia url e key pra pacht da imagem
-            console.log('Sucesso ao enviar imagem para o Amazon S3.', ' Nova url: ' + newImageUrl, ' Nova key: ' + newImageKey);
-          } catch (error) {
-            console.error('Erro ao Enviar imagem para o Amazon S3')
-          }
-      } catch (error) {
-        console.error('Erro ao apagar imagem atual do Amazon S3:', error);
-      }
-    }
-
-    const handleFileChange = (event) => {
-      setSelectedFile(event.target.files[0]);
-    }
-    //*===================== UPLOAD da Image no S3 =====================*
+    //*===================== DELETE =====================*
 
 
 
     return(
       <div className="manageProduct-father"> 
-          {products && ( // renderização condicional
+          {products && (
                         <div className="dadosExibidos-manageProduct">
                         <h1 className="title-manageProduct">Meus produtos</h1>
                         {/* Dropdown de Categorias */}
@@ -228,7 +175,7 @@ const ManageProduct = () => {
                               {products.filter(product => product.categoria === category._id)
                               .map((product, index) => (
                                 <div key={product._id} className="product-item">
-                                  {editingProductId !== product._id && ( //Se o id dos dois for diferente, exibe o código entre ( )
+                                  {editingProductId !== product._id && ( // Verifica se este produto está em modo de edição
                                     <>
                                       <img src={product.imageUrl} className="img-product-manageProduct"/>
                                       <p>{product.nome}</p>
@@ -254,51 +201,36 @@ const ManageProduct = () => {
                                       </div>
                                     </>
                                   )}
-
-                                  {editingProductId === product._id && ( // Se o id for igual, exibe o código entre ( )
+                                  {editingProductId === product._id && (
                                     <div className="inputEdit-manageProduct">
+                                      <h2>Editar Produto</h2>
                                       <form onSubmit={editProduct}>
-                                        {imageUrl && <img src={imageUrl} alt="Imagem Enviada" className="img-product-manageProduct" />} {/* Exibe a imagem se houver um link */}
-                                        <input type="file" onChange={handleFileChange} accept="image/*" className='fileUpload-upload_s3'/>
-                                        <div>
-                                            <button onClick={(e) => { e.preventDefault(); handleImageUpload()}} disabled={!selectedFile}>Confirmar imagem</button>
-                                            <button onClick={(e) => { e.preventDefault(); deleteImage() }}>Remover foto atual</button>
-                                        </div>
-                                        <br/>
-                                        <br/>                                      
-                                        <input type="hidden"/>
+                                        <input type="hidden" value={editingProduct._id} />
                                         <label htmlFor="edit-nome">Nome do Produto: </label>
                                         <input
-                                          className="input-manageProduct"
                                           type="text"
                                           id="edit-nome"
                                           required
                                           value={editedProduct.nome}
                                           onChange={(e) => setEditedProduct({ ...editedProduct, nome: e.target.value })}
                                         /><br />
-                                        
-                                        <label htmlFor="edit-descricao">Descrição: </label>
-                                        <input
-                                          className="input-manageProduct"
-                                          type="text"
-                                          id="edit-descricao"
-                                          value={editedProduct.descricao}
-                                          onChange={(e) => setEditedProduct({ ...editedProduct, descricao: e.target.value })}
-                                        /><br />
-
                                         <label htmlFor="edit-preco">Preço: </label>
                                         <input
-                                          className="input-manageProduct"
                                           type="text"
                                           id="edit-preco"
                                           required
                                           value={editedProduct.preco}
                                           onChange={(e) => setEditedProduct({ ...editedProduct, preco: e.target.value })}
                                         /><br />
-
+                                        <label htmlFor="edit-descricao">Descrição: </label>
+                                        <input
+                                          type="text"
+                                          id="edit-descricao"
+                                          value={editedProduct.descricao}
+                                          onChange={(e) => setEditedProduct({ ...editedProduct, descricao: e.target.value })}
+                                        /><br />
                                         <label htmlFor="edit-tamanhos">Tamanhos: </label>
                                         <input
-                                          className="input-manageProduct"
                                           type="text"
                                           id="edit-tamanhos"
                                           value={editedProduct.tamanhos}
@@ -306,18 +238,14 @@ const ManageProduct = () => {
                                         /><br />
                                         <label htmlFor="edit-sabores">Sabores: </label>
                                         <input
-                                          className="input-manageProduct"
                                           type="text"
                                           id="edit-sabores"
                                           value={editedProduct.sabores}
                                           onChange={(e) => setEditedProduct({ ...editedProduct, sabores: e.target.value })}
-                                        /><br /><br/>
-                                        <div className="div-buttons-manageProduct">
-                                          <button type="submit" className="salvarButton-manageProduct">Salvar</button>
-                                          <button onClick={handleCancelButtonClick} className="cancelButton-manageProduct">Cancelar</button>
-                                        </div>
+                                        /><br />
+                                        <button type="submit">Salvar</button>
                                       </form>
-                                      
+                                      <button onClick={handleCancelButtonClick}>Cancelar Alteração</button>
                                     </div>
                                   )}
                                 </div>

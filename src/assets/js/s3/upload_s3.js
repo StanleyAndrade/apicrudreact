@@ -44,9 +44,6 @@ function ImageUpload({ onImageUrlChange, onImageKeyChange }) {
 
     const handleFileChange = (event) => {
         setSelectedFile(event.target.files[0]);
-        // setTimeout(() => {
-        //     handleImageUpload();
-        // }, 3000); // 3000 milissegundos = 3 segundos
     };
 
     const deleteImage = async () => {
@@ -66,12 +63,9 @@ function ImageUpload({ onImageUrlChange, onImageKeyChange }) {
         <div className='father-upload_s3'>
             <label htmlFor="fileUpload">Escolher imagem do produto</label>
             <input type="file" onChange={handleFileChange} accept="image/*" className='fileUpload-upload_s3'/>
-
-            
-
             {imageUrl && <img src={imageUrl} alt="Imagem Enviada" className='img-upload_s3' />} {/* Exibe a imagem se houver um link */}
             <div>
-                <button onClick={handleImageUpload} disabled={!selectedFile}>Enviar imagem</button>
+                <button onClick={handleImageUpload} disabled={!selectedFile}>Confirmar imagem</button>
                 <button onClick={deleteImage}>Deletar Imagem</button>
             </div>
         </div>

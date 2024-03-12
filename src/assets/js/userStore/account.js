@@ -1,5 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import CreateCategoria from "../product/createCategoria";
+import CreateProduct from "../product/createProduct";
+import Dashboard from "./dashboard";
+import ManageProduct from "../product/manageProduct";
 
 const Account = () => {
     const [userData, setUserData] = useState(null);
@@ -12,7 +16,12 @@ const Account = () => {
         payment: "",
         nameperson: ""
     });
+    
     const [isEditing, setIsEditing] = useState(false);
+
+    const handleCancelButtonClick = () => {
+        setIsEditing(false)
+    }
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -51,44 +60,60 @@ const Account = () => {
         }
     }
 
+        // Use o estado para controlar qual componente deve ser exibido
+        const [view, setView] = useState(<ManageProduct/>);
+
+        // Função para trocar para a exibição de produtos
+        function ProductButton() {
+            setView(<CreateProduct/>);
+        }
+    
+        // Função para trocar para a exibição de categorias
+        function CategoriaButton() {
+            setView(<CreateCategoria/>);
+        }
+
     return (
         <div className="father-account">
-            {userData && !isEditing && (
-                <div className="menu-account">
-                    <h2 className="name-account"><b></b>{userData.name}</h2>
-                    <p><b>Endereço:</b> <br/>{userData.endereco}</p>
-                    <p><b>Telefone:</b> <br/>{userData.phone}</p>
-                    <p><b>Email:</b> <br/>{userData.email}</p>
-                    <p><b>Horário de Funcionamento</b>: <br/>{null}</p>
-                    <p><b>Tempo de entrega:</b> <br/>{userData.time}</p>
-                    
-                    <div>
-                    <p><b>Forma de Pagamento:</b></p>
-                        <ul style={{ listStyleType: 'none', padding: 0 }}>
+        {userData && !isEditing && (
+            <div className="menu-account">
+                <h2 className="name-account"><b></b>{userData.name}</h2>
+                <p className="text-account"><b>Endereço:</b> <br/>{userData.endereco}</p>
+                <p className="text-account"><b>Telefone:</b> <br/>{userData.phone}</p>
+                <p className="text-account"><b>Email:</b> <br/>{userData.email}</p>
+                <p className="text-account"><b>Horário de Funcionamento</b>: <br/>{null}</p>
+                <p className="text-account"><b>Tempo de entrega:</b> <br/>{userData.time}</p>
+                <div>
+                    <label className="labeltext-account"><b>Forma de Pagamento:</b>
+                        <ul style={{ listStyleType: 'none', padding: 0 }} className="ultext-account">
                             {userData.payment.map((pagamento, index) => (
-                            <li key={index}>{pagamento}</li>
+                            <li key={index} className="litext-account">{pagamento}</li>
                             ))}
                         </ul>
-                    </div>
-                    <p><b>Proprietário:</b> <br/>{userData.nameperson}</p>
-                    <div className="div-editButton-account">
-                        <button onClick={handleEditButtonClick} className="editButton-account">Editar</button>
-                    </div>
+                    </label>
                 </div>
-            )}
-            {isEditing && (
-                <div>
-                    <input type="text" name="name" value={newUserData.name} onChange={handleInputChange} placeholder="Novo Nome" />
-                    <input type="text" name="endereco" value={newUserData.endereco} onChange={handleInputChange} placeholder="Novo Endereço" />
-                    <input type="text" name="phone" value={newUserData.phone} onChange={handleInputChange} placeholder="Novo Telefone" />
-                    <input type="text" name="email" value={newUserData.email} onChange={handleInputChange} placeholder="Novo Email" />
-                    <input type="text" name="time" value={newUserData.time} onChange={handleInputChange} placeholder="Novo Horário" />
-                    <input type="text" name="payment" value={newUserData.payment} onChange={handleInputChange} placeholder="Nova Forma de Pagamento" />
-                    <input type="text" name="nameperson" value={newUserData.nameperson} onChange={handleInputChange} placeholder="Novo Nome da Pessoa" />
-                    <button onClick={handleUpdateUserData}>Salvar</button>
-                </div>
-            )}
-        </div>
+                <p className="text-account"><b>Proprietário:</b> <br/>{userData.nameperson}</p>
+                <div className="div-editButton-account">
+                    <button onClick={handleEditButtonClick} className="editButton-account">Editar</button>
+                </div>                 
+
+            </div>
+        )}
+        {isEditing && (
+            <div className="div-inputs-account">
+                <input type="text" name="name" value={newUserData.name} onChange={handleInputChange} placeholder="Novo Nome" className="input-account" />
+                <input type="text" name="endereco" value={newUserData.endereco} onChange={handleInputChange} placeholder="Novo Endereço" className="input-account" />
+                <input type="text" name="phone" value={newUserData.phone} onChange={handleInputChange} placeholder="Novo Telefone" className="input-account" />
+                <input type="text" name="email" value={newUserData.email} onChange={handleInputChange} placeholder="Novo Email" className="input-account" />
+                <input type="text" name="time" value={newUserData.time} onChange={handleInputChange} placeholder="Novo Horário" className="input-account" />
+                <input type="text" name="payment" value={newUserData.payment} onChange={handleInputChange} placeholder="Nova Forma de Pagamento" className="input-account" />
+                <input type="text" name="nameperson" value={newUserData.nameperson} onChange={handleInputChange} placeholder="Novo Nome da Pessoa" className="input-account" />
+                <br/>
+                <button onClick={handleUpdateUserData} className="salvar-account">Salvar</button>
+                <button onClick={handleCancelButtonClick} className="cancel-account">Cancelar</button>
+            </div>
+        )}
+    </div>        
     )
 }
 

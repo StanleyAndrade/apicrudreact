@@ -1,15 +1,19 @@
 import React from "react";
 
-const LogoutUser = () => {
-    //*===================== LOGOUT =====================*
-    const handleLogout = () => {
+const LogoutUserStore = () => {
 
-    // Remova o token e o email do armazenamento local ao fazer logout
-    localStorage.removeItem('token'); // Certifique-se de remover o token corretamente
-    localStorage.removeItem('userEmail');
-    console.log("Usuário deslogado")
+    // LOGOUT
+    const handleLogout = () => {
+      try {
+        // Remova o token e o email do armazenamento local ao fazer logout
+        localStorage.removeItem('token');
+        localStorage.removeItem('userEmail');
+        console.log("Sucesso ao deslogar usuário")
+        window.reload()
+      } catch (error) {
+        console.error('Erro ao deslogar ', error)
+      }
   };
-  //*===================== LOGOUT =====================*
 
   return (
     <div>
@@ -18,4 +22,4 @@ const LogoutUser = () => {
   )
 }
 
-export default LogoutUser
+export default LogoutUserStore

@@ -1,5 +1,22 @@
+.father-createCategoria{
+    display: flex;
+    flex-direction: column;
+}
+
+.card-createCategoria{
+    display: flex;
+    flex-direction: column;
+    background-color: #5830027c;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 15px;
+    padding: 0px 15px 10px 15px;
+    font-weight: 600;
+}
+
 .createCategoryButton-account{
-    background-color: #583002;
+    background-color: #975100;
     border: none;
     border-radius: 25px;
     color: white;
@@ -10,19 +27,6 @@
     white-space: nowrap; /* Impede que o texto quebre em várias linhas */
     display: inline-block; /* Garante que o botão tenha a largura necessária para o conteúdo */
     line-height: 1; /* Mantém o texto centralizado verticalmente */
-}
-
-.father-createCategoria{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #5830027c;
-    border: none;
-    border-radius: 25px;
-    color: white;
-    font-size: 15px;
-    padding: 0px 15px 10px 15px;
-    font-weight: 600;
 }
 
 .title-createCategoria{
@@ -61,4 +65,19 @@
     display: inline-block; /* Garante que o botão tenha a largura necessária para o conteúdo */
     line-height: 1; /* Mantém o texto centralizado verticalmente */
     margin-top: 5px;
+}
+
+.cancelButton-createCategoria{
+    background-color: #583002;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 5px;
+    padding: 10px 20px; /* Ajuste o padding horizontal conforme necessário */
+    white-space: nowrap; /* Impede que o texto quebre em várias linhas */
+    display: inline-block; /* Garante que o botão tenha a largura necessária para o conteúdo */
+    line-height: 1; /* Mantém o texto centralizado verticalmente */
 }

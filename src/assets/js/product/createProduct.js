@@ -16,7 +16,7 @@ const CreateProduct = () => {
         categoria: '',
     });
 
-    const [showFormCreate, setShowFormCreate] = useState(false);
+    const [showFormCreate, setShowFormCreate] = useState(true);
     const [categories, setCategories] = useState([]);
 
     const handleImageUrlChange = (url) => {
@@ -32,13 +32,7 @@ const CreateProduct = () => {
             imageKey: key,
         }));
     };
-    
 
-    // useEffect(() => {
-    //     if (newProduct.imageUrl !== '' && newProduct.imageKey !== '') {
-    //         createProduct();
-    //     }
-    // }, [newProduct.imageUrl, newProduct.imageKey]);
 
     const createProduct = () => {
         axios.post('http://localhost:8080/api/produtos', newProduct)
@@ -154,6 +148,8 @@ const CreateProduct = () => {
                         </select><br />
 
                         <button type="button" onClick={createProduct} className="createButton-createProduct">Cadastrar Produto</button>
+                         {/* Botão para cancelar */}
+                         <button type="button" onClick={() => setShowFormCreate(false)} className="cancelButton-createProduct"> Cancelar </button>
                     </div>
                 </form>
                 </div>

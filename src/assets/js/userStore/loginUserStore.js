@@ -1,35 +1,32 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const LoginUserStore = () => {
 
     //*===================== LOGIN =====================*
     const [token, setToken] = useState("");
-    const [userEmail, setUserEmail] = useState("");
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    //const [userEmail, setUserEmail] = useState("");
+    //const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-  
-    const handleLogin = () => {
-      axios.post("http://localhost:8080/login/store", { email, password })
-        .then((response) => {
-          setToken(response.data.token);
-          setUserEmail(email);     
-          //essa função abaixo não está sendo usada
-          setIsAuthenticated(true);
-          console.log("Usuário logado com sucesso");
-  
-          // Salva o token e o email no armazenamento local (localStorage)
-          localStorage.setItem('token', response.data.token);
-          localStorage.setItem('userEmail', email);
-        })
-        .catch((error) => {
-          console.error(error.response.data);
-          console.error("Deu erro", error);
-        });
+    const handleLogin = async (event) => {
+        try {
+            const response = await axios.post("http://localhost:8080/login/store", { email, password })
+            setToken(response.data.token)
+            // Salva o token e o email no armazenamento local (localStorage)
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('userEmail', email);
+            console.log('Sucesso ao logar usuário');
+        } catch (error) {
+            console.error('Erro ao logar Usuário ', error.response.data)
+        }
     };
+    useEffect(() => {
+        handleLogin()
+    }, [])
+
     //*===================== LOGIN =====================*
 
     return (
@@ -61,7 +58,7 @@ const LoginUserStore = () => {
                                     onChange={(e) => setPassword(e.target.value)}></input>
                                 </label>
                             </div>
-                            <button className="btn-login"onClick={handleLogin}>ENTRAR</button>
+                            <button className="btn-login"onClick={(e) => { e.preventDefault(); handleLogin()}}>ENTRAR</button>
                             <p className="esqueciSenha"> Esqueci senha. <a className="redefinir" href="">Redefinir senha</a></p>
                         </form>
                     </div>

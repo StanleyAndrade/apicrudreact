@@ -2,48 +2,47 @@ import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
 
-//páginas a serem exibidas
+// Importe os componentes que você deseja exibir dinamicamente
 import CreateProduct from "../product/createProduct";
+import CreateCategoria from "../product/createCategoria";
 import ManageProduct from "../product/manageProduct";
 import Account from "./account";
 import ListProductNew from "../product/listProductNew";
-import CreateCategoria from "../product/createCategoria";
 import UploadImage from "../s3/upload_s3";
+import LogoutUserStore from "./logoutUserStore";
 
 const Dashboard = () => {
-    // const [message, setMessage] = useState('');
-    // const [error, setError] = useState('');
-    // const email = localStorage.getItem('userEmail')
 
-    // useEffect(() => {
-    //     // Recupere o token JWT armazenado no localStorage
-    //     const token = localStorage.getItem('token')
-    
-    //     if (!token) {
-    //         setError(`Você não está logado. Faça login` )
-    //         return;
-    //     }
-    
-    //     axios.get('http://localhost:8080/protected/store', {
-    //             headers: { Authorization: token },
-    //     }).then((response) => {
-    //         setMessage(response.data.message)
-    //     }).catch((error) => {
-    //         setError(error.response.data.message)
-    //     })
-    // }, [])
+    const [componente, setComponemte] = useState(<ManageProduct/>)
 
-    return(
-        <div>
-            <div className="div-dashboard">
+    function manageProduct () {
+        setComponemte(<ManageProduct/>)
+    }
+
+    function createProduct () {
+        setComponemte(<CreateProduct/>)
+    }
+
+    function createCategoria () {
+        setComponemte(<CreateCategoria/>)
+    }
+
+
+
+    return (
+        <div className="father-dashboard">
+            <div className="barra-lateral-dashboard">
                 <Account/>
-                <ManageProduct/>
-                <div className="div-createProduto-categoria-dashboard">
-                    <CreateProduct/>
-                    <CreateCategoria/>
-                </div>
-                
+                <button onClick={manageProduct} className="MeusprodutosButton-dashboard">Meus Produtos</button>
+                <button onClick={createProduct} className="CreateButton-dashboard">Criar</button>
+                <button onClick={createCategoria} className="CategoriaButton-dashboard">Categoria</button>
+                <LogoutUserStore/>
             </div>
+
+            <div className="div-dashboard">
+                {componente}
+            </div>
+
         </div>
     )
 }

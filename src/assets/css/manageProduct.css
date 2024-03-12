@@ -1,34 +1,73 @@
 .manageProduct-father {
     display: flex;
     flex-direction: row;
+    padding-right: 12px;
+}
+
+.dadosExibidos-manageProduct{
+
+}
+
+.inputEdit-manageProduct{
+
+}
+
+.input-manageProduct{
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    padding-right: 30px;
+    margin: 2px;
+    width: 100%; /* Ajusta a largura da imagem para preencher completamente o contêiner */
+    min-width: 100%; /* Define uma largura mínima para os itens */
+    max-width: 150%; /* Define uma largura máxima para os itens */
+}
+
+.salvarButton-manageProduct{
+    background-color: #ffffff;
+    color: #000000;
+    font-weight: 600;
+    border: none;
+    padding: 3px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cancelButton-manageProduct{
+    background-color: #ffffff;
+    color: #000000;
+    font-weight: 600;
+    border: none;
+    padding: 3px 20px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 .product-container {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between; /* Distribui os itens uniformemente nas linhas */
     gap: 20px;
-    justify-content: space-between; /* Distribui os itens uniformemente nas linhas */    
 }
 
 .product-item {
-    width: calc(30% - 20px); /* Ajuste para garantir que haja espaço suficiente para 3 itens por linha */
+    width: calc(25% - 20px); /* Ajuste para garantir que haja espaço suficiente para 4 itens por linha */
     min-width: 200px; /* Define uma largura mínima para os itens */
-    max-width: 30%; /* Define uma largura máxima para os itens */
-    flex-grow: 1; /* Permite que os itens cresçam para ocupar o espaço disponível */
-    border: 1px solid #ccc;
+    max-width: 25%; /* Define uma largura máxima para os itens */
+    border: none;
     padding: 20px;
     background-color: #583002;
     border-radius: 5px;
-    border: none;
     margin-bottom: 10px;
+    box-sizing: border-box; /* Garante que o padding e a borda não aumentem a largura do item */
 }
 
-.img-product-manageProduct{
-    min-width: 200px; /* Define uma largura mínima para os itens */
-    max-width: 30%; /* Define uma largura máxima para os itens */
-    flex-grow: 1; /* Permite que os itens cresçam para ocupar o espaço disponível */
-    border-radius: 5px;
+.img-product-manageProduct {
+    width: 100%; /* Ajusta a largura da imagem para preencher completamente o contêiner */
+    height: auto; /* Garante que a altura seja ajustada automaticamente */
+    border-radius: 5px; /* Adiciona borda arredondada à imagem */
 }
+
 
 
 .title-manageProduct{
@@ -73,4 +112,8 @@
     padding: 3px 20px;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.fileUpload-upload_s3{
+    font-size: 10px;
 }

@@ -1,7 +1,6 @@
 .father-createProduct{
     display: flex;
     flex-direction: column;
-    align-items: center;
     background-color: #5830027c;
     border: none;
     border-radius: 25px;
@@ -12,7 +11,7 @@
 }
 
 .createProductButton-account{
-    background-color: #583002;
+    background-color: #975100;
     border: none;
     border-radius: 25px;
     color: white;
@@ -20,10 +19,11 @@
     font-weight: 600;
     cursor: pointer;
     margin-bottom: 5px;
-    padding: 10px 20px; /* Ajuste o padding horizontal conforme necessário */
+    padding: 10px 25px; /* Ajuste o padding horizontal conforme necessário */
     white-space: nowrap; /* Impede que o texto quebre em várias linhas */
     display: inline-block; /* Garante que o botão tenha a largura necessária para o conteúdo */
     line-height: 1; /* Mantém o texto centralizado verticalmente */
+    margin-top: 30px;
 }
 
 .title-createProduct{
@@ -49,6 +49,21 @@
 }
 
 .createButton-createProduct{
+    background-color: #583002;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 5px;
+    padding: 10px 20px; /* Ajuste o padding horizontal conforme necessário */
+    white-space: nowrap; /* Impede que o texto quebre em várias linhas */
+    display: inline-block; /* Garante que o botão tenha a largura necessária para o conteúdo */
+    line-height: 1; /* Mantém o texto centralizado verticalmente */
+}
+
+.cancelButton-createProduct{
     background-color: #583002;
     border: none;
     border-radius: 25px;

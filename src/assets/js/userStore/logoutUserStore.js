@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from 'react-router-dom'; // Importe useNavigate em vez de useHistory
 
 const LogoutUserStore = () => {
+  const navigate = useNavigate(); // Use useNavigate para navegação
 
     // LOGOUT
     const handleLogout = () => {
@@ -9,7 +11,7 @@ const LogoutUserStore = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('userEmail');
         console.log("Sucesso ao deslogar usuário")
-        window.reload()
+        navigate('/');
       } catch (error) {
         console.error('Erro ao deslogar ', error)
       }

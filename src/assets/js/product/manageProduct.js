@@ -12,7 +12,7 @@ const ManageProduct = () => {
     const [editingProductId, setEditingProductId] = useState(null); //recebe o id do produto que está sendo editado e serve pra abrir e fechar o formulário
     const [editingProduct, setEditingProduct] = useState(null) // Estado que oculta e exibe o formulário
     const [selectedFile, setSelectedFile] = useState(null); //armazena o arquivo do upload
-    const [editedProduct, setEditedProduct] = useState({ // Estado que armazena os dados edicados
+    const [editedProduct, setEditedProduct] = useState({ // Estado que armazena os dados editados
       nome: '',
       descricao: '',
       tamanhos: '',
@@ -254,6 +254,8 @@ const ManageProduct = () => {
                                       </div>
                                     </>
                                   )}
+
+                                  
 
                                   {editingProductId === product._id && ( // Se o id for igual, exibe o código entre ( )
                                     <div className="inputEdit-manageProduct">

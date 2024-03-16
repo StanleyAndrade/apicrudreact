@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom'; // Importe useNavigate em vez de useHistory
 import { Link } from "react-router-dom";
 
 const LoginUserStore = () => {
@@ -10,6 +11,7 @@ const LoginUserStore = () => {
     //const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate(); // Use useNavigate para navegação
 
     const handleLogin = async (event) => {
         try {
@@ -19,6 +21,7 @@ const LoginUserStore = () => {
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('userEmail', email);
             console.log('Sucesso ao logar usuário');
+            navigate('/user/:id');
         } catch (error) {
             console.error('Erro ao logar Usuário ', error.response.data)
         }

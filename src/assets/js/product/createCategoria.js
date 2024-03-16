@@ -2,26 +2,25 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 const CreateCategoria = () => {
-    //*===================== POST =====================*
-    const [categories, setCategories] = useState([]) // armazena categorias    
+    // Variáveis para pegar categorias
+    const [categories, setCategories] = useState([]) // getAllCaterories armazena categorias aqui    
+    // Variáveis para pegar Criar Categorias
     const [showFormCreate, setShowFormCreate] = useState(true) // Estado que oculta e exibe o formulário de criação
-    const [showFormEdit, setShowFormEdit] = useState(false) // Estado que oculta e exibe o formulário de edição
-    const [editedCategoria, setEditedCategoria] = useState({ // Armazena a edição da categoria para atualizar
-        nome: '',
-    })
     const [newCategoria, setNewCategoria] = useState({ // Armazena os dados da categoria que será criada
         nome: '',
     })
-    const [editingCategoryId, setEditingCategoryId] = useState(null); // ID da categoria em edição
-    const [editedCategoriaData, setEditedCategoriaData] = useState({ // Dados editados temporariamente
+
+    const [showAndOcultForm, setShowAndOcultForm] = useState(null) // Estado que oculta e exibe o formulário
+    const [editedCategoria, setEditedCategoria] = useState({ 
         nome: '',
     })
+    const [editingCategoriaId, setEditingCategoriaId] = useState(null); //recebe o id do produto que está sendo editado e serve pra abrir e fechar o formulário
 
     // Função para buscar todas as categorias
     const getAllCategories = async () => {
         try {
             const response = await axios.get('http://localhost:8080/categorias')
-            setCategories(response.data)
+            setCategories(response.data) //armazena as categorias em "categoria"
         } catch (error) {
             console.error("Erro ao buscar categorias no MongoDB", error)
         }
@@ -43,6 +42,40 @@ const CreateCategoria = () => {
             })
     }
 
+    // Patch
+    const editCategory = async (event) => {
+        event.preventDefault()
+        try {
+            const response = await axios.patch(`http://localhost:8080/categorias/${showAndOcultForm._id}`, editedCategoria)
+            getAllCategories()
+            setEditedCategoria({
+                nome: '',
+            })
+            setShowAndOcultForm(null)
+            setEditingCategoriaId(false)
+            console.log('Sucesso ao atualizar categoria no MongoDB', response.data)
+        } catch (error) {
+            console.error('Erro ao atualizar categoria no MongoDB: ', error)
+        }
+    }
+
+    //Abrir formulário
+    const openEditForm = (category) => {
+        if (category) {
+            setShowAndOcultForm(category)
+            setEditedCategoria({
+                nome: category.nome
+            })
+            setEditingCategoriaId(category._id)
+        }
+    }
+
+    // Fecha o formulário. Cancela a edição
+    const handleCancelButtonClick = () => {
+        setEditingCategoriaId(false)
+    }
+
+
     // Função para deletar uma categoria
     const deleteCategoria = async (categoryId) => {
         try {
@@ -52,31 +85,6 @@ const CreateCategoria = () => {
         } catch (error) {
             console.error('Erro ao apagar categoria ', error)
         }
-    }
-
-    // Função para editar uma categoria
-    const editCategoria = async (event) => {
-        event.preventDefault()
-        try {
-            const response = await axios.patch(`http://localhost:8080/categorias/${editingCategoryId}`, {
-              nome: nome
-            })
-            console.log('Sucesso ao atualizar categoria no MongoDB', response.data)
-            setShowFormEdit(false) // Oculta o formulário de edição após a edição bem-sucedida
-            setEditingCategoryId(null); // Limpa o ID da categoria em edição
-            setEditedCategoria(editedCategoriaData); // Atualiza os dados da categoria editada
-        } catch (error) {
-            console.error('Erro ao atualizar categoria no MongoDB: ', error)
-        }
-    }
-
-    console.log('Teste ', editedCategoriaData)
-
-    // Função para lidar com o clique no botão "Editar"
-    const handleEditClick = (categoria) => {
-        setEditedCategoriaData({ ...categoria }); // Define os dados editados temporariamente
-        setEditingCategoryId(categoria._id); // Define o ID da categoria em edição
-        setShowFormEdit(true); // Mostra o formulário de edição
     }
 
     useEffect(() => {
@@ -114,35 +122,36 @@ const CreateCategoria = () => {
                 <h3>Suas Categorias</h3>
                 {categories.map(category => (
                     <div key={category._id}>
-                        {editingCategoryId === category._id ? (
-                            // Formulário de edição da categoria em vez do nome da categoria
-                            <div className="card-createCategoria" key={category._id}>
-                                <form onSubmit={editCategoria}>
-                                    <h3 className="title-createCategoria">Editar Categoria</h3>
-                                    <label htmlFor="edit-nome" className="labelnome-createCategoria">Novo nome da categoria: </label>
+                        {editingCategoriaId !== category._id && (
+                            <>
+                            <p>{category.nome}</p>
+                            <div className="div-buttons-createCategoria">
+                                <button onClick={() => openEditForm(category)} className="editButton-createCategoria">Editar</button>
+                                <button onClick={() => deleteCategoria(category._id)}>Apagar</button>
+                            </div>
+                            </>
+                        )}
+                        
+                        {editingCategoriaId === category._id && (
+                            <div className="inputEdit-createCategoria">
+                                <form onSubmit={editCategory}>
+                                    <label htmlFor="edit-nome">Nome</label>
                                     <input
-                                        type="text"
-                                        className="inputtext-createCategoria"
-                                        id="edit-nome"
-                                        required
-                                        value={editedCategoriaData.nome}
-                                        onChange={(e) => setEditedCategoriaData({ ...editedCategoriaData, nome: e.target.value })}
-                                    /><br />
-
-                                    <div className="div-createButton-createCategoria">
-                                        <button type="submit" className="createButton-createCategoria">Salvar Alterações</button>
-                                        <button type="button" onClick={() => setShowFormEdit(false)} className="cancelButton-createProduct">Cancelar</button>
+                                    className="input-createCategoria"
+                                    type="text"
+                                    id="edit-nome"
+                                    required
+                                    value={editedCategoria.nome}
+                                    onChange={(e) => setEditedCategoria({ ...editedCategoria, nome: e.target.value})}/>
+                                    <br/><br/>
+                                    <div className="div-buttons-createCategoria">
+                                        <button type="submit" className="salvarButton-createCategoria">Salvar</button>
+                                        <button onClick={handleCancelButtonClick} className="cancelButton-createCategoria">Cancelar</button>
                                     </div>
                                 </form>
                             </div>
-                        ) : (
-                            // Nome da categoria com botão de edição
-                            <>
-                                <p>{category.nome}</p>
-                                <button onClick={() => deleteCategoria(category._id)}>Apagar</button>
-                                <button onClick={() => handleEditClick(category)}>Editar</button>
-                            </>
                         )}
+                        
                     </div>
                 ))}
             </div>

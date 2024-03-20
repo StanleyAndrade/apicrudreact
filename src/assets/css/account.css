@@ -1,5 +1,5 @@
 .father-account{
-
+    white-space: nowrap; /* Impede que o texto quebre em várias linhas */
 }
 
 .div-view-account{
@@ -23,7 +23,7 @@
     color: white;
     font-size: 11px;
     cursor: pointer;
-    padding: 10px 40px;
+    padding: 10px 32px;
     font-weight: 600;
 }
 
@@ -100,4 +100,8 @@
     line-height: 1; /* Mantém o texto centralizado verticalmente */
     margin-top: 1px;
     margin-bottom: 20px;
+}
+
+.completdata{
+    display: none;
 }

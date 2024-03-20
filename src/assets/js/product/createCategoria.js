@@ -19,7 +19,7 @@ const CreateCategoria = () => {
     // Função para buscar todas as categorias
     const getAllCategories = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/categorias')
+            const response = await axios.get('http://localhost:8080/categorias/buscar')
             setCategories(response.data) //armazena as categorias em "categoria"
         } catch (error) {
             console.error("Erro ao buscar categorias no MongoDB", error)
@@ -29,7 +29,7 @@ const CreateCategoria = () => {
     // Função para criar uma nova categoria
     const createCategoria = (event) => {
         event.preventDefault()
-        axios.post('http://localhost:8080/categorias', newCategoria)
+        axios.post('http://localhost:8080/categorias/criar', newCategoria)
             .then(() => {
                 getAllCategories()
                 setNewCategoria({
@@ -46,7 +46,7 @@ const CreateCategoria = () => {
     const editCategory = async (event) => {
         event.preventDefault()
         try {
-            const response = await axios.patch(`http://localhost:8080/categorias/${showAndOcultForm._id}`, editedCategoria)
+            const response = await axios.patch(`http://localhost:8080/categorias/editar/${showAndOcultForm._id}`, editedCategoria)
             getAllCategories()
             setEditedCategoria({
                 nome: '',

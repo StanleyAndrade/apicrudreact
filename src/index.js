@@ -21,7 +21,7 @@ const router = createBrowserRouter([
     element: <CreateUserStore/>
   },
   {
-    path: "/user/:id",
+    path: "/dashboard",
     element: <Dashboard/>
   }
 ])

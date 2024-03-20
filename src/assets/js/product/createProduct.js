@@ -18,6 +18,7 @@ const CreateProduct = () => {
 
     const [showFormCreate, setShowFormCreate] = useState(true);
     const [categories, setCategories] = useState([]);
+    const [userId, setUserId] = useState("")
 
     const handleImageUrlChange = (url) => {
         setNewProduct((prevProduct) => ({
@@ -33,9 +34,21 @@ const CreateProduct = () => {
         }));
     };
 
+    // const getUserId = async () => {
+    //     try {
+    //         const response = await axios.get("http://localhost:8080/protected/store/get", {
+    //             headers: { Authorization: `${localStorage.getItem("token")}` }
+    //         })
+    //         setUserId(response.data._id)
+    //         console.log('Esse é o id do usuário', userId)
+    //     } catch (error) {
+            
+    //     }
+    // }
+
 
     const createProduct = () => {
-        axios.post('http://localhost:8080/api/produtos', newProduct)
+        axios.post('http://localhost:8080/produtos/criar', newProduct)
             .then(() => {
                 setNewProduct({
                     nome: '',
@@ -58,7 +71,7 @@ const CreateProduct = () => {
 
     const getAllCategories = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/categorias');
+            const response = await axios.get('http://localhost:8080/categorias/buscar');
             setCategories(response.data);
         } catch (error) {
             console.error('Erro ao buscar categorias:', error);
@@ -72,6 +85,7 @@ const CreateProduct = () => {
     return (
         <div >
             {showFormCreate ? (
+                
                 <div className="father-createProduct">
                     <form >
                     <h3 className="title-createProduct">Cadastrar produto</h3>

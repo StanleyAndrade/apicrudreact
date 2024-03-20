@@ -10,6 +10,7 @@ import Account from "./account";
 import ListProductNew from "../product/listProductNew";
 import UploadImage from "../s3/upload_s3";
 import LogoutUserStore from "./logoutUserStore";
+import ProductAndCategory from "../product/productAndCategory";
 
 const Dashboard = () => {
 
@@ -20,7 +21,7 @@ const Dashboard = () => {
     }
 
     function createProduct () {
-        setComponemte(<CreateProduct/>)
+        setComponemte(<ProductAndCategory/>)
     }
 
     function createCategoria () {
@@ -34,8 +35,7 @@ const Dashboard = () => {
             <div className="barra-lateral-dashboard">
                 <Account/>
                 <button onClick={manageProduct} className="MeusprodutosButton-dashboard">Meus Produtos</button>
-                <button onClick={createProduct} className="CreateButton-dashboard">Criar</button>
-                <button onClick={createCategoria} className="CategoriaButton-dashboard">Categoria</button>
+                <button onClick={createProduct} className="CreateButton-dashboard">Cadastrar item</button>
                 <LogoutUserStore/>
             </div>
 

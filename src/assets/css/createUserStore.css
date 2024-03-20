@@ -1,0 +1,42 @@
+.father-createUserStore{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #5830027c;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 15px;
+    padding: 0px 15px 0px 15px;
+    font-weight: 600;
+    margin: 0% 25%;
+}
+
+.button-createUserStore{
+    background-color: #e77c00;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 5px;
+    padding: 10px 25px; /* Ajuste o padding horizontal conforme necessário */
+    white-space: nowrap; /* Impede que o texto quebre em várias linhas */
+    display: inline-block; /* Garante que o botão tenha a largura necessária para o conteúdo */
+    line-height: 1; /* Mantém o texto centralizado verticalmente */
+    margin-top: 30px;
+}
+
+.labelnome-createUserStore{
+    font-size: 15px;
+    font-weight: 300;
+}
+
+.inputtext-createUserStore{
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    padding-right: 150px;
+    margin-top: 5px;
+}

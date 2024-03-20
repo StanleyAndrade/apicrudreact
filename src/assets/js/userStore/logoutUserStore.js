@@ -19,7 +19,7 @@ const LogoutUserStore = () => {
 
   return (
     <div>
-        <button onClick={handleLogout}>Logout</button>
+        <button onClick={handleLogout} className="logoutButton-LogoutUserStore">Sair</button>
     </div>
   )
 }

@@ -15,13 +15,13 @@ const LoginUserStore = () => {
 
     const handleLogin = async (event) => {
         try {
-            const response = await axios.post("http://localhost:8080/login/store", { email, password })
+            const response = await axios.post("http://localhost:8080/userstore/login", { email, password })
             setToken(response.data.token)
             // Salva o token e o email no armazenamento local (localStorage)
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('userEmail', email);
             console.log('Sucesso ao logar usuário');
-            navigate('/user/:id');
+            navigate('/dashboard');
         } catch (error) {
             console.error('Erro ao logar Usuário ', error.response.data)
         }

@@ -7,10 +7,12 @@ import '../src/assets/css/account.css'
 import '../src/assets/css/createProduct.css'
 import '../src/assets/css/createCategoria.css'
 import '../src/assets/css/upload_s3.css'
+import '../src/assets/css/ProductAndCategory.css'
+import '../src/assets/css/logoutUserStore.css'
+import '../src/assets/css/createUserStore.css'
 
 // Product
 //import ManageProduct from './assets/js/product/manageProduct';
-import ListProduct from './assets/js/product/listProduct';
 import CreateProduct from './assets/js/product/createProduct';
 import ManageProduct from './assets/js/product/manageProduct';
 import Listarpedidosprivados from './assets/js/product/listarpedidosPrivados';

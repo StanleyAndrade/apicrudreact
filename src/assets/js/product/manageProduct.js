@@ -32,7 +32,7 @@ const ManageProduct = () => {
     // Função para buscar todos os produtos
     const getAllProducts = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/produtos`)
+        const response = await axios.get(`http://localhost:8080/produtos/buscar`)
         setProducts(response.data)
         //console.log('Sucesso ao buscar produtos no MongoDB')
       } catch (error) {
@@ -48,7 +48,7 @@ const ManageProduct = () => {
           setProducts(response.data);
           console.log('Sucesso ao buscar produtos por categoria no MongoDB')
         } else {
-          const response = await axios.get('http://localhost:8080/api/produtos');
+          const response = await axios.get('http://localhost:8080/produtos/buscar');
           setProducts(response.data);
           console.log('Sucesso 2 ao buscar produtos por categoria no MongoDB')
         }
@@ -60,7 +60,7 @@ const ManageProduct = () => {
     // Função pra buscar todas as categorias
     const getAllCategories = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/categorias')
+        const response = await axios.get('http://localhost:8080/categorias/buscar')
         setCategories(response.data)
         //console.log('Sucesso ao buscar categorias no MongoDB')
       } catch (error) {
@@ -84,7 +84,7 @@ const ManageProduct = () => {
     //*===================== PATCH =====================*
     const editProduct = (event) => {
       event.preventDefault()
-      axios.patch(`http://localhost:8080/api/produtos/${editingProduct._id}`, editedProduct)
+      axios.patch(`http://localhost:8080/produtos/editar/${editingProduct._id}`, editedProduct)
       .then((response) => {
       getAllProducts()
       setEditingProduct(null)
@@ -132,7 +132,7 @@ const ManageProduct = () => {
     //*===================== Patch da Image no MongoDB =====================*
     const editImageProduct = async (url, key) => {
       try {
-        const response = await axios.patch(`http://localhost:8080/api/produtos/${editingProduct._id}`, {
+        const response = await axios.patch(`http://localhost:8080/produtos/editar/${editingProduct._id}`, {
           imageUrl: url,
           imageKey: key
         })
@@ -146,7 +146,7 @@ const ManageProduct = () => {
 
     //*===================== DELETE - Product =====================*
     const deleteProduct = (productId) => {
-      axios.delete(`http://localhost:8080/api/produtos/${productId}`)
+      axios.delete(`http://localhost:8080/produtos/deletar/${productId}`)
       .then(() => {
         getAllProducts()
         console.log('Sucesso ao apagar produto no MongoDB')

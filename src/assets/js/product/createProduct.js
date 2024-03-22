@@ -2,71 +2,59 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import ImageUpload from "../s3/upload_s3";
 
-
 const CreateProduct = () => {
-    const [newProduct, setNewProduct] = useState({
-        nome: '',
-        descricao: '',
-        tamanhos: '',
-        sabores: '',
-        preco: '',
-        userid: '',
-        imageUrl: '',
-        imageKey: '',
-        categoria: '',
-    });
+    const [nome, setNome] = useState('')
+    const [descricao, setDescricao] = useState('')
+    const [tamanhos, setTamanhos] = useState('')
+    const [sabores, setSabores] = useState('')
+    const [preco, setPreco] = useState('')
+    const [userid, setUserid] = useState('')
+    const [imageUrl, setImageUrl] = useState('')
+    const [imageKey, setImageKey] = useState('')
+    const [categoria, setCategoria] = useState('')
+
 
     const [showFormCreate, setShowFormCreate] = useState(true);
     const [categories, setCategories] = useState([]);
-    const [userId, setUserId] = useState("")
+    const [userId, setUserId] = useState()
+
+    const fetchUserData = async () => {
+        try {
+            const response = await axios.get("http://localhost:8080/protected/userstore/buscar", {
+                headers: { Authorization: `${localStorage.getItem("token")}` }
+            });
+            const getid = response.data.userData._id
+            setUserId(getid);
+        } catch (error) {
+            console.error("Erro ao buscar os dados do usuário:", error);
+        }
+    }
+
+    useEffect(() => {
+        fetchUserData();
+    }, []);
 
     const handleImageUrlChange = (url) => {
-        setNewProduct((prevProduct) => ({
-            ...prevProduct,
-            imageUrl: url,
-        }));
+        setImageUrl(url);
     };
         
     const handleImageKeyChange = (key) => {
-        setNewProduct((prevProduct) => ({
-            ...prevProduct,
-            imageKey: key,
-        }));
+        setImageKey(key);
     };
+    
 
-    // const getUserId = async () => {
-    //     try {
-    //         const response = await axios.get("http://localhost:8080/protected/store/get", {
-    //             headers: { Authorization: `${localStorage.getItem("token")}` }
-    //         })
-    //         setUserId(response.data._id)
-    //         console.log('Esse é o id do usuário', userId)
-    //     } catch (error) {
-            
-    //     }
-    // }
-
-
-    const createProduct = () => {
-        axios.post('http://localhost:8080/produtos/criar', newProduct)
-            .then(() => {
-                setNewProduct({
-                    nome: '',
-                    descricao: '',
-                    tamanhos: '',
-                    sabores: '',
-                    preco: '',
-                    userid: '', 
-                    imageUrl: '',
-                    imageKey: '',
-                    categoria: '',
-                });
+    const createProduct = async () => {
+        try {
+            try {
+                const response = await axios.post('http://localhost:8080/produtos/criar', { nome, descricao, tamanhos, sabores, preco, userid: userId, imageUrl, imageKey, categoria})
                 console.log('Produto cadastrado com sucesso');
                 setShowFormCreate(false);
-            })
-            .catch((error) => {
+            } catch (error) {
                 console.error('Erro ao criar produto: ', error);
-            });
+            }
+        } catch (error) {
+            console.error('Erro ao criar produto: ', error);
+        }
     };
 
     const getAllCategories = async () => {
@@ -100,8 +88,8 @@ const CreateProduct = () => {
                         className="inputtext-createProduct"
                         id="nome"
                         required
-                        value={newProduct.nome}
-                        onChange={(e) => setNewProduct({ ...newProduct, nome: e.target.value })}
+                        value={nome}
+                        onChange={(e) => setNome(e.target.value )}
                     /><br />
 
                     <label htmlFor="descricao" className="labelnome-createProduct">Descrição</label>
@@ -111,8 +99,8 @@ const CreateProduct = () => {
                         className="inputtext-createProduct"
                         id="descricao"
                         placeholder="(opcional)"
-                        value={newProduct.descricao}
-                        onChange={(e) => setNewProduct({ ...newProduct, descricao: e.target.value })}
+                        value={descricao}
+                        onChange={(e) => setDescricao(e.target.value)}
                     /><br />
 
                     <label htmlFor="preco" className="labelnome-createProduct">Preço</label>
@@ -122,8 +110,8 @@ const CreateProduct = () => {
                         className="inputtext-createProduct"
                         id="preco"
                         required
-                        value={newProduct.preco}
-                        onChange={(e) => setNewProduct({ ...newProduct, preco: e.target.value })}
+                        value={preco}
+                        onChange={(e) => setPreco(e.target.value)}
                     /><br />
 
                     <label htmlFor="tamanhos" className="labelnome-createProduct">Tamanho: - <b>Mais de 1 tamanho, separar por vígula</b> "," </label>
@@ -132,8 +120,8 @@ const CreateProduct = () => {
                         type="text"
                         className="inputtext-createProduct"
                         id="tamanhos"
-                        value={newProduct.tamanhos}
-                        onChange={(e) => setNewProduct({ ...newProduct, tamanhos: e.target.value.split(',') })}
+                        value={tamanhos}
+                        onChange={(e) => setTamanhos(e.target.value.split(','))}
                     /><br />
 
                     <label htmlFor="tamanhos" className="labelnome-createProduct">Sabores - <b>Mais de 1 sabor, separar por vígula</b> "," </label>
@@ -142,8 +130,8 @@ const CreateProduct = () => {
                         id="sabores"
                         className="inputtext-createProduct"
                         placeholder="Ex.: Chocolate, morango"
-                        value={newProduct.sabores}
-                        onChange={(e) => setNewProduct({ ...newProduct, sabores: e.target.value.split(',') })}
+                        value={sabores}
+                        onChange={(e) => setSabores(e.target.value.split(','))}
                     /><br/><br/>
 
                     <div className="div-categoria-e-createButton-createProduct">
@@ -152,8 +140,8 @@ const CreateProduct = () => {
                         <select
                             id="categoria"
                             className="select-categorias-createProduct"
-                            value={newProduct.categoria}
-                            onChange={(e) => setNewProduct({ ...newProduct, categoria: e.target.value })}
+                            value={categoria}
+                            onChange={(e) => setCategoria(e.target.value)}
                         >
                             <option value="" className="option-categorias-createProduct">Selecione uma categoria</option>
                             {categories.map(category => (

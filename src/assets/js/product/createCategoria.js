@@ -9,13 +9,32 @@ const CreateCategoria = () => {
     const [newCategoria, setNewCategoria] = useState({ // Armazena os dados da categoria que será criada
         nome: '',
     })
+    const [nome, setNome] = useState('')
+    const [userid, setUserid] = useState('')
 
     const [showAndOcultForm, setShowAndOcultForm] = useState(null) // Estado que oculta e exibe o formulário
     const [editedCategoria, setEditedCategoria] = useState({ 
         nome: '',
     })
     const [editingCategoriaId, setEditingCategoriaId] = useState(null); //recebe o id do produto que está sendo editado e serve pra abrir e fechar o formulário
+    const [userId, setUserId] = useState()
 
+    const fetchUserData = async () => {
+        try {
+            const response = await axios.get("http://localhost:8080/protected/userstore/buscar", {
+                headers: { Authorization: `${localStorage.getItem("token")}` }
+            });
+            const getid = response.data.userData._id
+            setUserId(getid);
+        } catch (error) {
+            console.error("Erro ao buscar os dados do usuário:", error);
+        }
+    }
+
+    useEffect(() => {
+        fetchUserData();
+    }, []);
+    
     // Função para buscar todas as categorias
     const getAllCategories = async () => {
         try {
@@ -29,7 +48,7 @@ const CreateCategoria = () => {
     // Função para criar uma nova categoria
     const createCategoria = (event) => {
         event.preventDefault()
-        axios.post('http://localhost:8080/categorias/criar', newCategoria)
+        axios.post('http://localhost:8080/categorias/criar', {nome, userid: userId})
             .then(() => {
                 getAllCategories()
                 setNewCategoria({
@@ -103,8 +122,8 @@ const CreateCategoria = () => {
                             className="inputtext-createCategoria"
                             id="nome"
                             required
-                            value={newCategoria.nome}
-                            onChange={(e) => setNewCategoria({ ...newCategoria, nome: e.target.value })}
+                            value={nome}
+                            onChange={(e) => setNome(e.target.value)}
                         /><br />
 
                         <div className="div-createButton-createCategoria">

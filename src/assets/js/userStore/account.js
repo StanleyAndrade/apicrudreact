@@ -33,6 +33,7 @@ const Account = () => {
                 });
                 setUserData(response.data.userData);
                 setNewUserData(response.data.userData); // Passa os dados do usuário para os inputs
+                //console.log('Id é ', userData._id)
             } catch (error) {
                 console.error("Erro ao buscar os dados do usuário:", error);
             }

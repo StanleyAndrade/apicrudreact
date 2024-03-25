@@ -9,7 +9,7 @@ const Home = () => {
         const token = localStorage.getItem('token')
     
         if (token) {
-            navigate('/user/:id')
+            navigate('/')
         }
     }, [navigate])
 

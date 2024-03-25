@@ -3,7 +3,7 @@ import React, {useState, useEffect} from "react";
 import ImageUpload from "../s3/upload_s3";
 
 const ManageProduct = () => {
-    
+    const [userId, setUserId] = useState('')
     const [products, setProducts] = useState([]); // Armazena os dados do produto
     const [categories, setCategories] = useState([]); // Armazena dados da categoria
     const [selectedCategory, setSelectedCategory] = useState(""); // Categoria selecionada
@@ -24,69 +24,56 @@ const ManageProduct = () => {
       categoria: '',
     })
 
-    // Função que fecha o formulário de edição quando clica em "cancelar"
-    const handleCancelButtonClick = () => {
-      setEditingProductId(false)
-    }
-
-    // Função para buscar todos os produtos
-    const getAllProducts = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/produtos/buscar`)
-        setProducts(response.data)
-        //console.log('Sucesso ao buscar produtos no MongoDB')
-      } catch (error) {
-        console.error('Erro ao buscar produtos no MongoDB', error)
-      }
-    }
+        // Aqui você precisa passar o email na URL como um parâmetro de consulta (query parameter)
+        const response = await axios.get('http://localhost:8080/protected/userstore/buscar', {
+                  headers: { Authorization: `${localStorage.getItem("token")}` }
+        });
+        const getid = response.data.userData._id
+        setUserId(getid)
 
-    // Função que busca produtos por categoria
-    const getProductsByCategory = async (categoryId) => {
-      try {
-        if (categoryId) {
-          const response = await axios.get(`http://localhost:8080/produtos/${categoryId}`);
-          setProducts(response.data);
-          console.log('Sucesso ao buscar produtos por categoria no MongoDB')
-        } else {
-          const response = await axios.get('http://localhost:8080/produtos/buscar');
-          setProducts(response.data);
-          console.log('Sucesso 2 ao buscar produtos por categoria no MongoDB')
-        }
+        // Pega os produtos
+        const responseProducts = await axios.get(`http://localhost:8080/produtos/user/${response.data.userData._id}`);
+        setProducts(responseProducts.data);
+
+        // Pega as categorias
+        const responseCategories = await axios.get(`http://localhost:8080/categorias/user/${response.data.userData._id}`);
+        setCategories(responseCategories.data);
+
       } catch (error) {
-        console.error("Erro ao buscar produtos por categoria no MongoDB", error)
+        console.error('Deu erro:', error);
       }
     };
 
-    // Função pra buscar todas as categorias
-    const getAllCategories = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/categorias/buscar')
-        setCategories(response.data)
-        //console.log('Sucesso ao buscar categorias no MongoDB')
-      } catch (error) {
-        console.error("Erro ao buscar categorias no MongoDB", error)
-      }
-    }
-
-    // Realiza a chamada das funções
     useEffect(() => {
-        // Realize a chamada para buscar os produtos quando o componente for montado.
-        getAllCategories()
-        getAllProducts();
+      fetchData();
     }, []);
 
-    // Função para manipular a mudança de categoria
-    const handleCategoryChange = (event) => {
-      setSelectedCategory(event.target.value)
-      getProductsByCategory(event.target.value)
-    }
+    const handleCategoryChange = async (categoryId) => {
+      try {
+          setSelectedCategory(categoryId);
+          if (categoryId) {
+              const response = await axios.get(`http://localhost:8080/produtos/${categoryId}/${userId}`);
+              setProducts(response.data);
+              console.log('Sucesso ao buscar produtos por categoria no MongoDB')
+          } else {
+              const response = await axios.get(`http://localhost:8080/produtos/user/${userId}`);
+              setProducts(response.data);
+              console.log('Sucesso 2 ao buscar produtos por categoria no MongoDB')
+          }
+      } catch (error) {
+          console.error("Erro ao buscar produtos por categoria", error);
+      }
+  };
 
     //*===================== PATCH =====================*
     const editProduct = (event) => {
       event.preventDefault()
       axios.patch(`http://localhost:8080/produtos/editar/${editingProduct._id}`, editedProduct)
       .then((response) => {
-      getAllProducts()
+      //getAllProducts()
+      fetchData()
       setEditingProduct(null)
       setEditedProduct({
         nome: '',
@@ -127,6 +114,11 @@ const ManageProduct = () => {
         setEditingProductId(product._id); // Armazena o ID do produto que está sendo editado
       }
     }
+
+    // Função que fecha o formulário de edição quando clica em "cancelar"
+    const handleCancelButtonClick = () => {
+      setEditingProductId(false)
+    }
     //*===================== PATCH =====================*
 
     //*===================== Patch da Image no MongoDB =====================*
@@ -148,7 +140,8 @@ const ManageProduct = () => {
     const deleteProduct = (productId) => {
       axios.delete(`http://localhost:8080/produtos/deletar/${productId}`)
       .then(() => {
-        getAllProducts()
+        //getAllProducts()
+        fetchData();
         console.log('Sucesso ao apagar produto no MongoDB')
       })
       .catch((error) => {
@@ -207,17 +200,19 @@ const ManageProduct = () => {
 
 
 
+
+
     return(
       <div className="manageProduct-father"> 
           {products && ( // renderização condicional
                         <div className="dadosExibidos-manageProduct">
                         <h1 className="title-manageProduct">Meus produtos</h1>
                         {/* Dropdown de Categorias */}
-                        <select value={selectedCategory} onChange={handleCategoryChange} className="select-categorias-manageProduct">
-                          <option value="" className="option-categorias-manageProduct">Todas as Categorias</option>
-                          {categories.map(category => (
-                            <option key={category._id} value={category._id}>{category.nome}</option>
-                          ))}
+                        <select value={selectedCategory} onChange={(e) => handleCategoryChange(e.target.value)} className="select-categorias-manageProduct">
+                            <option value="" className="option-categorias-manageProduct">Todas as Categorias</option>
+                            {categories.map(category => (
+                                <option key={category._id} value={category._id}>{category.nome}</option>
+                            ))}
                         </select>
                           
                         {categories.map(category => (

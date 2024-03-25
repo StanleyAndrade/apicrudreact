@@ -7,8 +7,9 @@ function ImageUpload({ onImageUrlChange, onImageKeyChange }) {
     const [imageKey, setImageKey] = useState('');
     const [message, setMessage] = useState(''); 
 
-    const handleImageUpload = async () => {
+    const handleImageUpload = async (event) => {
         try {
+            event.preventDefault()
             const formData = new FormData();
             formData.append('file', selectedFile);
 

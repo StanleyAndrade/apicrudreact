@@ -40,3 +40,21 @@
     padding-right: 150px;
     margin-top: 5px;
 }
+
+.divimage-createUserStore{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.img-product-createUserStore {
+    width: 50%; /* Ajusta a largura da imagem para preencher completamente o contêiner */
+    height: auto; /* Garante que a altura seja ajustada automaticamente */
+    border-radius: 5px; /* Adiciona borda arredondada à imagem */
+}
+
+.divCreateButton-createUserStore{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

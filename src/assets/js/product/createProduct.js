@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import ImageUpload from "../s3/upload_s3";
+import { useNavigate } from "react-router-dom";
 
 const CreateProduct = () => {
+    const navigate = useNavigate()
     const [nome, setNome] = useState('')
     const [descricao, setDescricao] = useState('')
     const [tamanhos, setTamanhos] = useState('')
@@ -25,8 +27,26 @@ const CreateProduct = () => {
             });
             const getid = response.data.userData._id
             setUserId(getid);
+
+            // Pega as categorias
+            const responseCategories = await axios.get(`http://localhost:8080/categorias/user/${response.data.userData._id}`);
+            setCategories(responseCategories.data); 
+
+
         } catch (error) {
             console.error("Erro ao buscar os dados do usuário:", error);
+        }
+    }
+
+    // Delete - apaga a imagem do Amazon S3 
+    const deleteImage = async () => {
+        try {
+            const response = await axios.delete(`http://localhost:8080/delete/${imageKey}`)
+            setImageUrl('')
+            setImageKey('')
+            console.log('Sucesso ao apagar imagem no Amazon S3')
+        } catch (error) {
+            console.error("Erro ao apagar imagem no Amazon S3", error)
         }
     }
 
@@ -41,6 +61,16 @@ const CreateProduct = () => {
     const handleImageKeyChange = (key) => {
         setImageKey(key);
     };
+
+    //Volta pra home
+    const cancelar = () => {
+        try {
+            deleteImage()
+            setShowFormCreate(false)
+        } catch (error) {
+            console.error('Erro ao cancelar')
+        }
+    }
     
 
     const createProduct = async () => {
@@ -56,19 +86,6 @@ const CreateProduct = () => {
             console.error('Erro ao criar produto: ', error);
         }
     };
-
-    const getAllCategories = async () => {
-        try {
-            const response = await axios.get('http://localhost:8080/categorias/buscar');
-            setCategories(response.data);
-        } catch (error) {
-            console.error('Erro ao buscar categorias:', error);
-        }
-    };
-
-    useEffect(() => {
-        getAllCategories();
-    }, []);
 
     return (
         <div >
@@ -151,7 +168,7 @@ const CreateProduct = () => {
 
                         <button type="button" onClick={createProduct} className="createButton-createProduct">Cadastrar Produto</button>
                          {/* Botão para cancelar */}
-                         <button type="button" onClick={() => setShowFormCreate(false)} className="cancelButton-createProduct"> Cancelar </button>
+                         <button type="button" onClick={cancelar} className="cancelButton-createProduct"> Cancelar </button>
                     </div>
                 </form>
                 </div>

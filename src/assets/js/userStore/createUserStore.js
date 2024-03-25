@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import ImageUpload from "../s3/upload_s3";
 
 const CreateUserStore = () => {
     const navigate = useNavigate()
@@ -15,10 +16,14 @@ const CreateUserStore = () => {
     const [password, setPassword] = useState("");
     const [username, setUsername] = useState("")
     const [horarioDeFuncionamento, setHorarioDeFuncionamento] = useState("")
+    const [imageUrl, setImageUrl] = useState('')
+    const [imageKey, setImageKey] = useState('')
+    const [selectedFile, setSelectedFile] = useState(null); //armazena o arquivo do upload
 
+    // POST - Cria o usuário
     const createUserStore = (event) => {
         event.preventDefault()
-        axios.post("http://localhost:8080/userstore/criar", { name, endereco, phone, email, horarioDeFuncionamento, time, payment, nameperson, password, username})
+        axios.post("http://localhost:8080/userstore/criar", { name, endereco, phone, email, horarioDeFuncionamento, time, payment, nameperson, password, username, imageUrl, imageKey})
           .then((response) => {
             console.log(response.data);
             console.log("Funcionou");
@@ -29,7 +34,63 @@ const CreateUserStore = () => {
             console.error("Deu erro", error);
         });
     };
-    //*===================== POST =====================*
+
+    // PATCH - Edita apenas o imageKey e imageUrl no MongoDB
+    const editImageProduct = async (url, key) => {
+        try {
+            const dataImage = {imageUrl: url, imageKey: key}
+            const response = await axios.patch('http://localhost:8080/protected/userstore/editar', dataImage,  {
+            headers: { Authorization: `${localStorage.getItem("token")}` }
+            })
+            console.log('Sucesso ao atualizar Imagem (url e key) no MongoDB')
+        } catch (error) {
+            console.log('Erro ao atualizar imagem (url e key) no MongoDB', error)
+        }
+    }
+
+    // Delete - apaga a imagem do Amazon S3 
+    const deleteImage = async () => {
+        try {
+          const response = await axios.delete(`http://localhost:8080/delete/${imageKey}`)
+          setImageUrl('')
+          setImageKey('')
+          editImageProduct('', '')
+          console.log('Sucesso ao apagar imagem no Amazon S3')
+        } catch (error) {
+          console.error("Erro ao apagar imagem no Amazon S3", error)
+        }
+    }
+
+    // POST - Envia a imagem para o Amazon S3
+    const handleImageUpload = async () => {
+        try {
+          // Apaga a imagem atual
+          deleteImage()
+  
+            // Faz o Upload da imagem
+            try {
+              const formData = new FormData()
+              formData.append('file', selectedFile)
+              const response = await axios.post('http://localhost:8080/upload', formData, {
+                      headers: {'Content-Type': 'multipart/form-data',}
+              });
+              const newImageUrl = response.data.imageUrl
+              const newImageKey = response.data.imageKey
+              setImageUrl(newImageUrl)
+              setImageKey(newImageKey)
+              editImageProduct(newImageUrl, newImageKey) // Envia url e key pra pacht da imagem
+              console.log('Sucesso ao enviar imagem para o Amazon S3.', ' Nova url: ' + newImageUrl, ' Nova key: ' + newImageKey);
+            } catch (error) {
+              console.error('Erro ao Enviar imagem para o Amazon S3')
+            }
+        } catch (error) {
+          console.error('Erro ao apagar imagem atual do Amazon S3:', error);
+        }
+      }
+  
+    const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+    }
 
     function concatenar (){
         if (document.getElementById('dinheiro').checked) {
@@ -48,10 +109,31 @@ const CreateUserStore = () => {
         setPayment(pagamento.split(','))
     }
 
+    //Volta pra home
+    const cancelar = () => {
+        try {
+            deleteImage()
+            navigate('/')
+        } catch (error) {
+            console.error('Erro ao cancelar')
+        }
+    }
+
     return (
         <div className="father-createUserStore">
             <h1>Cadastrar Loja</h1>
             <form>
+                <div className="divimage-createUserStore">
+                    {imageUrl && <img src={imageUrl} alt="Imagem Enviada" className="img-product-createUserStore" />} {/* Exibe a imagem se houver um link */}<br/>
+                    <input type="file" onChange={handleFileChange} accept="image/*" className='fileUpload-upload_s3'/>
+                    <div>
+                    <button onClick={(e) => { e.preventDefault(); handleImageUpload()}} disabled={!selectedFile}>Confirmar imagem</button>
+                    <button onClick={(e) => { e.preventDefault(); deleteImage() }}>Remover foto atual</button>
+                    </div>
+                </div>
+
+                <br/>
+                <br/>                                      
                 <label className="labelnome-createUserStore">Qual o nome da sua loja?</label><br/>
                 <input
                 type="text"
@@ -130,7 +212,10 @@ const CreateUserStore = () => {
                     onChange={(e) => setPassword(e.target.value)}
                 /><br />
 
-                <button onClick={createUserStore} className="button-createUserStore">Criar Conta</button>
+                <div className="divCreateButton-createUserStore">
+                    <button onClick={createUserStore} className="button-createUserStore">Criar Conta</button>
+                    <button onClick={cancelar} className="button-createUserStore">Cancelar</button>
+                </div>
             </form>
         </div>
     )

@@ -26,6 +26,11 @@ const CreateCategoria = () => {
             });
             const getid = response.data.userData._id
             setUserId(getid);
+
+            // Pega as categorias
+            const responseCategories = await axios.get(`http://localhost:8080/categorias/user/${response.data.userData._id}`);
+            setCategories(responseCategories.data);
+
         } catch (error) {
             console.error("Erro ao buscar os dados do usuário:", error);
         }
@@ -35,22 +40,23 @@ const CreateCategoria = () => {
         fetchUserData();
     }, []);
     
-    // Função para buscar todas as categorias
-    const getAllCategories = async () => {
-        try {
-            const response = await axios.get('http://localhost:8080/categorias/buscar')
-            setCategories(response.data) //armazena as categorias em "categoria"
-        } catch (error) {
-            console.error("Erro ao buscar categorias no MongoDB", error)
-        }
-    }
+    // // Função para buscar todas as categorias
+    // const getAllCategories = async () => {
+    //     try {
+    //         const response = await axios.get('http://localhost:8080/categorias/buscar')
+    //         setCategories(response.data) //armazena as categorias em "categoria"
+    //     } catch (error) {
+    //         console.error("Erro ao buscar categorias no MongoDB", error)
+    //     }
+    // }
 
     // Função para criar uma nova categoria
     const createCategoria = (event) => {
         event.preventDefault()
         axios.post('http://localhost:8080/categorias/criar', {nome, userid: userId})
             .then(() => {
-                getAllCategories()
+                //getAllCategories()
+                fetchUserData()
                 setNewCategoria({
                     nome: '',
                 });
@@ -66,7 +72,8 @@ const CreateCategoria = () => {
         event.preventDefault()
         try {
             const response = await axios.patch(`http://localhost:8080/categorias/editar/${showAndOcultForm._id}`, editedCategoria)
-            getAllCategories()
+            //getAllCategories()
+            fetchUserData()
             setEditedCategoria({
                 nome: '',
             })
@@ -99,16 +106,17 @@ const CreateCategoria = () => {
     const deleteCategoria = async (categoryId) => {
         try {
             const response = await axios.delete(`http://localhost:8080/categoria/delete/${categoryId}`)
-            getAllCategories()
+            //getAllCategories()
+            fetchUserData()
             console.log('Sucesso ao apagar categoria no MongoDB')
         } catch (error) {
             console.error('Erro ao apagar categoria ', error)
         }
     }
 
-    useEffect(() => {
-        getAllCategories()
-    }, [])
+    // useEffect(() => {
+    //     getAllCategories()
+    // }, [])
 
     return (
         <div className="father-createCategoria">

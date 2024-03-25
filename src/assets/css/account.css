@@ -1,5 +1,25 @@
 .father-account{
     white-space: nowrap; /* Impede que o texto quebre em várias linhas */
+    padding-top: 20px;
+}
+
+.menu-account{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.img-account {
+    width: 50%; /* Ajusta a largura da imagem para preencher completamente o contêiner */
+    height: auto; /* Garante que a altura seja ajustada automaticamente */
+    border-radius: 5px; /* Adiciona borda arredondada à imagem */
+}
+
+.imgEdit-account {
+    width: 50%; /* Ajusta a largura da imagem para preencher completamente o contêiner */
+    height: auto; /* Garante que a altura seja ajustada automaticamente */
+    border-radius: 5px; /* Adiciona borda arredondada à imagem */
+    padding-bottom: 10px;
 }
 
 .div-view-account{
@@ -29,6 +49,7 @@
 
 .name-account{
     text-align: center;
+    margin-top: -2px;
 }
 
 .text-account{
@@ -104,4 +125,29 @@
 
 .completdata{
     display: none;
+}
+
+.divshareLink-account{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: -20px;
+}
+
+.share-button{
+    background-color: #975100;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 5px;
+    padding: 10px 25px; /* Ajuste o padding horizontal conforme necessário */
+    white-space: nowrap; /* Impede que o texto quebre em várias linhas */
+    display: inline-block; /* Garante que o botão tenha a largura necessária para o conteúdo */
+    line-height: 1; /* Mantém o texto centralizado verticalmente */
+    margin-top: -16px;
+    margin-bottom: 20px;
 }

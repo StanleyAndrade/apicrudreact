@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
-import ImageUpload from "../s3/upload_s3";
 
 const ManageProduct = () => {
     const [userId, setUserId] = useState('')

@@ -16,12 +16,12 @@ const Listarpedidosprivados = () => {
             const newTotal = response.data.reduce((acc, product) => acc + product.preco, 0);
             setTotal(Number(newTotal));
             
-                const novoPedido = response.data.map((item) => ({
-                    nome: item.nome,
-                    descricao: item.descricao,
-                    preco: item.preco,
-                    sabores: item.sabores 
-                }));
+            const novoPedido = response.data.map((item) => ({
+                nome: item.nome,
+                descricao: item.descricao,
+                preco: item.preco,
+                sabores: item.sabores 
+            }));
       
               // Atualiza o estado uma vez com todos os pedidos
                 setPedido(novoPedido);

@@ -14,7 +14,7 @@ const CreateUser = () => {
         axios.post("http://localhost:8080/register", { name, phone, nascimento, email, password})
           .then((response) => {
             console.log(response.data);
-            console.log("Funcionou");
+            console.log("Funcionou"); 
           })
           .catch((error) => {
             console.error(error.response.data);

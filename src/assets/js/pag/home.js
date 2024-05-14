@@ -15,16 +15,12 @@ const Home = () => {
 
     return(
         <div className="app">
-
-            <div>Nav Menu Transparente</div>
-
             <div className="father-text-and-form">
                 <div className="textos">
-                    <h1>Nome</h1>
-                    <h2>Seus clientes fazem o pedido pelo link
-                    <br/> e vai direto para o seu whatsapp. <br/>
-                    Veja como ficará o seu link: </h2>
-                    <h2>www.nome/nome da sua loja</h2>
+                    <h1>Gym</h1>
+                    <h2>Calcule Perimetria
+                    <br/>e Dobras Cutâneas <br/>
+                    de forma automática e simplificada </h2>
                 </div>
                 
                 <LoginUserStore/>

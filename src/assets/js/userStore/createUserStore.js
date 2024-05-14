@@ -121,7 +121,7 @@ const CreateUserStore = () => {
 
     return (
         <div className="father-createUserStore">
-            <h1>Cadastrar Loja</h1>
+            <h1>Criar Conta</h1>
             <form>
                 <div className="divimage-createUserStore">
                     {imageUrl && <img src={imageUrl} alt="Imagem Enviada" className="img-product-createUserStore" />} {/* Exibe a imagem se houver um link */}<br/>
@@ -134,7 +134,7 @@ const CreateUserStore = () => {
 
                 <br/>
                 <br/>                                      
-                <label className="labelnome-createUserStore">Qual o nome da sua loja?</label><br/>
+                <label className="labelnome-createUserStore">Nome da Empresa ou nome Pessoal</label><br/>
                 <input
                 type="text"
                 className="inputtext-createUserStore"
@@ -142,15 +142,15 @@ const CreateUserStore = () => {
                 onChange={(e) => setName(e.target.value)}
                 /><br/><br/>
 
-                <label className="labelnome-createUserStore">Nome de usuário minusculo e sem espaço <br/>Exemplo: <b>www.delivery.com/nomedasualoja</b></label><br/>
+                <label className="labelnome-createUserStore">Nome completo</label><br/>
                 <input
-                type="text"
-                className="inputtext-createUserStore"
-                placeholder="Exemplo: nomedasualoja"
-                onChange={(e) => setUsername(e.target.value)}
-                /><br/><br/>
+                    type="text"
+                    className="inputtext-createUserStore"
+                    placeholder=""
+                    onChange={(e) => setNamePerson(e.target.value)}
+                /><br /><br/>
 
-                <label className="labelnome-createUserStore">Endereço da loja</label><br/>
+                <label className="labelnome-createUserStore">Endereço</label><br/>
                 <input
                 type="text"
                 className="inputtext-createUserStore"
@@ -158,7 +158,7 @@ const CreateUserStore = () => {
                 onChange={(e) => setEndereco(e.target.value)}
                 /><br/><br/>
 
-                <label className="labelnome-createUserStore">Qual whatsapp deseja receber os pedidos?</label><br/>
+                <label className="labelnome-createUserStore">Whatsapp</label><br/>
                 <input
                     type="text"
                     className="inputtext-createUserStore"
@@ -173,36 +173,6 @@ const CreateUserStore = () => {
                     placeholder=""
                     onChange={(e) => setEmail(e.target.value)}
                 /><br/><br/>
-                
-                <label className="labelnome-createUserStore"> Horário de atendimento </label> <br/>
-                <input
-                    type="text"
-                    className="inputtext-createUserStore"
-                    placeholder="Exemplo: Das 17h as 00h"
-                    onChange={(e) => setHorarioDeFuncionamento(e.target.value)}
-                /><br/><br/>
-
-                <label className="labelnome-createUserStore"> Tempo de entrega do pedido </label> <br/> 
-                <input
-                    type="text"
-                    className="inputtext-createUserStore"
-                    placeholder="Exemplo: 40 minutos a 1 hora"
-                    onChange={(e) => setTime(e.target.value)}
-                /><br />
-
-                <p className="labelnome-createUserStore">Marque as formas de pagamento aceitas pela loja</p>
-                <label><input id="dinheiro" type="checkbox"onChange={(e) => concatenar()} ></input>Dinheiro</label>
-                <label><input id="cartao" type="checkbox"onChange={(e) => concatenar()} ></input>Cartão</label>
-                <label><input id="pix" type="checkbox"onChange={(e) => concatenar()} ></input>Pix</label>
-                <br/><br/>
-
-                <label className="labelnome-createUserStore">Nomes do Proprietários separado por vírgula</label><br/>
-                <input
-                    type="text"
-                    className="inputtext-createUserStore"
-                    placeholder="Exemplo: João Lucas, Fabiane"
-                    onChange={(e) => setNamePerson(e.target.value)}
-                /><br /><br/>
 
                 <label className="labelnome-createUserStore">Senha</label><br/>
                 <input

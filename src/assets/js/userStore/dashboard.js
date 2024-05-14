@@ -3,14 +3,16 @@ import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
 
 // Importe os componentes que você deseja exibir dinamicamente
-import CreateProduct from "../product/createProduct";
+import CreateProduct from "../product/createPerimetria";
 import CreateCategoria from "../product/createCategoria";
 import ManageProduct from "../product/manageProduct";
 import Account from "./account";
 import ListProductNew from "../product/listProductNew";
 import UploadImage from "../s3/upload_s3";
 import LogoutUserStore from "./logoutUserStore";
-import ProductAndCategory from "../product/productAndCategory";
+import PerimetriaeDobrasM from "../product/PerimetriaeDobrasM";
+import PerimetriaeDobrasF from "../product/PerimetriaeDobrasF";
+
 
 const Dashboard = () => {
 
@@ -20,8 +22,12 @@ const Dashboard = () => {
         setComponemte(<ManageProduct/>)
     }
 
-    function createProduct () {
-        setComponemte(<ProductAndCategory/>)
+    function createAvaliacaoM () {
+        setComponemte(<PerimetriaeDobrasM/>)
+    }
+
+    function createAvaliacaoF () {
+        setComponemte(<PerimetriaeDobrasF/>)
     }
 
     function createCategoria () {
@@ -34,8 +40,9 @@ const Dashboard = () => {
         <div className="father-dashboard">
             <div className="barra-lateral-dashboard">
                 <Account/>
-                <button onClick={manageProduct} className="MeusprodutosButton-dashboard">Meus Produtos</button>
-                <button onClick={createProduct} className="CreateButton-dashboard">Cadastrar item</button>
+                <button onClick={manageProduct} className="MeusprodutosButton-dashboard">Lista de Avaliações</button>
+                <button onClick={createAvaliacaoM} className="CreateButton-dashboard">Nova Avaliação<br/> Masculina</button>
+                <button onClick={createAvaliacaoF} className="CreateButton-dashboard">Nova Avaliação<br/> Feminina</button>
                 <LogoutUserStore/>
             </div>
 

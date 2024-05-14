@@ -13,7 +13,8 @@ import '../src/assets/css/createUserStore.css'
 
 // Product
 //import ManageProduct from './assets/js/product/manageProduct';
-import CreateProduct from './assets/js/product/createProduct';
+import CreatePerimetria from './assets/js/product/createPerimetria'
+import CreateDobrasCutaneas from './assets/js/product/createDobrasCutaneasM'
 import ManageProduct from './assets/js/product/manageProduct';
 import Listarpedidosprivados from './assets/js/product/listarpedidosPrivados';
 
@@ -28,11 +29,10 @@ import ProtectedRoute from './assets/js/user/private';
 import CreateUserStore from './assets/js/userStore/createUserStore';
 import LoginUserStore from './assets/js/userStore/loginUserStore';
 
-//Header e Footer
-import Header from './assets/js/headerFooter/header';
-
 //Home
 import Home from './assets/js/pag/home';
+
+import ok from '../src/assets/img/ok.png'
 
 
 function App() {

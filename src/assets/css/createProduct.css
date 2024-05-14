@@ -6,7 +6,7 @@
     border-radius: 25px;
     color: white;
     font-size: 15px;
-    padding: 0px 15px 0px 15px;
+    padding: 0px 10px 0px 10px;
     font-weight: 600;
 }
 
@@ -26,6 +26,55 @@
     margin-top: 30px;
 }
 
+.createButton-createProductNew{
+    background-color: #975100;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 5px;
+    padding: 10px 25px; /* Ajuste o padding horizontal conforme necessário */
+    white-space: nowrap; /* Impede que o texto quebre em várias linhas */
+    display: inline-block; /* Garante que o botão tenha a largura necessária para o conteúdo */
+    line-height: 1; /* Mantém o texto centralizado verticalmente */
+    margin-top: 10px;
+}
+
+.createAccount{
+    background-color: #583002;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 5px;
+    padding: 10px 25px; /* Ajuste o padding horizontal conforme necessário */
+    white-space: nowrap; /* Impede que o texto quebre em várias linhas */
+    display: inline-block; /* Garante que o botão tenha a largura necessária para o conteúdo */
+    line-height: 1; /* Mantém o texto centralizado verticalmente */
+}
+
+.searchEmail{
+    background-color: #583002;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 5px;
+    padding: 10px 25px; /* Ajuste o padding horizontal conforme necessário */
+    white-space: nowrap; /* Impede que o texto quebre em várias linhas */
+    display: inline-block; /* Garante que o botão tenha a largura necessária para o conteúdo */
+    line-height: 1; /* Mantém o texto centralizado verticalmente */
+    margin-top: 30px;
+}
+
+
+
 .title-createProduct{
     text-align: center;
 }
@@ -39,7 +88,8 @@
     border: none;
     border-radius: 5px;
     padding: 5px;
-    padding-right: 150px;
+    padding-right: 30px;
+    margin-bottom: 5px;
 }
 
 .div-categoria-e-createButton-createProduct{
@@ -92,3 +142,4 @@
     border: none;
     border-radius: 50px;
 }
+

@@ -19,7 +19,7 @@ const LoginUserStore = () => {
             setToken(response.data.token)
             // Salva o token e o email no armazenamento local (localStorage)
             localStorage.setItem('token', response.data.token);
-            localStorage.setItem('userEmail', email);
+            localStorage.setItem('userStoreEmail', email);
             console.log('Sucesso ao logar usuário');
             navigate('/dashboard');
         } catch (error) {

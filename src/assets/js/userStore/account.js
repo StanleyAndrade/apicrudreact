@@ -35,11 +35,11 @@ const Account = () => {
                 const response = await axios.get("http://localhost:8080/protected/userstore/buscar", {
                     headers: { Authorization: `${localStorage.getItem("token")}` }
                 });
+                localStorage.setItem('userStorename', response.data.userData.name)
+                localStorage.setItem('userStoreendereco', response.data.userData.endereco)
+                localStorage.setItem('userStoreid', response.data.userData._id)
                 setUserData(response.data.userData);
                 setNewUserData(response.data.userData); // Passa os dados do usuário para os inputs
-                setImageKey(response.data.userData.imageKey)
-                setImageUrl(response.data.userData.imageUrl)
-                //console.log('Id é ', userData._id)
             } catch (error) {
                 console.error("Erro ao buscar os dados do usuário:", error);
                 navigate("/");
@@ -157,10 +157,7 @@ const Account = () => {
             <div className="menu-account">
                 <img src={userData.imageUrl} className="img-account"/>
                 <h2 className="name-account"><b></b>{userData.name}</h2>
-                <div className="divshareLink-account">
-                    <h5>http://localhost:3000/{userData.username}</h5>
-                    <button onClick={handleShareButtonClick} className="share-button">Compartilhar Link da Loja</button>
-                </div>
+
 
                 <div className="completdata">
                     <p className="text-account"><b>Endereço:</b> <br/>{userData.endereco}</p>
@@ -189,11 +186,7 @@ const Account = () => {
         {isEditing && (
             <div className="div-inputs-account">
                 {imageUrl && <img src={imageUrl} alt="Imagem Enviada" className="imgEdit-account" />} {/* Exibe a imagem se houver um link */}
-                <input type="file" onChange={handleFileChange} accept="image/*" className='fileUpload-upload_s3'/>
-                <div>
-                    <button onClick={(e) => { e.preventDefault(); handleImageUpload()}} disabled={!selectedFile}>Confirmar imagem</button>
-                    <button onClick={(e) => { e.preventDefault(); deleteImage() }}>Remover foto atual</button>
-                </div>
+                
                 <br/>
                 <input type="text" name="name" value={newUserData.name} onChange={handleInputChange} placeholder="Novo Nome" className="input-account" />
                 <input type="text" name="endereco" value={newUserData.endereco} onChange={handleInputChange} placeholder="Novo Endereço" className="input-account" />

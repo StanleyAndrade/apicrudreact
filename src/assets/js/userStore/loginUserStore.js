@@ -15,7 +15,7 @@ const LoginUserStore = () => {
 
     const handleLogin = async (event) => {
         try {
-            const response = await axios.post("http://localhost:8080/userstore/login", { email, password })
+            const response = await axios.post("http://192.168.247.103:8080/userstore/login", { email, password })
             setToken(response.data.token)
             // Salva o token e o email no armazenamento local (localStorage)
             localStorage.setItem('token', response.data.token);

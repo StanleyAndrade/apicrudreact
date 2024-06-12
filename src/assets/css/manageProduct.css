@@ -1,3 +1,8 @@
+.father-manageProduct{
+    display: flex;
+    flex-direction: row;
+}
+
 .manageProduct-father {
     display: flex;
     flex-direction: row;

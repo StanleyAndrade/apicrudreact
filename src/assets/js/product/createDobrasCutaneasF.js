@@ -109,7 +109,7 @@ window.open(codigoTodo, '_blank')
             const Userid = localStorage.getItem('AlunoUserid')
             const UserStoreid = localStorage.getItem('userStoreid')
                 try {
-                    const response = await axios.post('http://localhost:8080/dobrascutaneas/criar', { subescapular, triciptal, abdominal, suprailiaca, peitoral, coxa, biciptal, axilarmedia, panturrilhamedia, somatoriodasdobras: somatorio7Dobras, resultadopercentualdegordura: G, pesoatual, pesogordo, pesomagro, pesoideal, idade, userid: Userid, storeid: UserStoreid})
+                    const response = await axios.post('http://192.168.247.103:8080/dobrascutaneas/criar', { subescapular, triciptal, abdominal, suprailiaca, peitoral, coxa, biciptal, axilarmedia, panturrilhamedia, somatoriodasdobras: somatorio7Dobras, resultadopercentualdegordura: G, pesoatual, pesogordo, pesomagro, pesoideal, idade, userid: Userid, storeid: UserStoreid})
                     console.log('Perimetria cadastrada com sucesso');
                     setShowFormCreate(false);
                 } catch (error) {

@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import ImageUpload from "../s3/upload_s3";
+
 
 const CreateUserStore = () => {
     const navigate = useNavigate()
@@ -23,7 +23,7 @@ const CreateUserStore = () => {
     // POST - Cria o usuário
     const createUserStore = (event) => {
         event.preventDefault()
-        axios.post("http://localhost:8080/userstore/criar", { name, endereco, phone, email, horarioDeFuncionamento, time, payment, nameperson, password, username, imageUrl, imageKey})
+        axios.post("http://192.168.247.103:8080/userstore/criar", { name, endereco, phone, email, horarioDeFuncionamento, time, payment, nameperson, password, username, imageUrl, imageKey})
           .then((response) => {
             console.log(response.data);
             console.log("Funcionou");
@@ -39,7 +39,7 @@ const CreateUserStore = () => {
     const editImageProduct = async (url, key) => {
         try {
             const dataImage = {imageUrl: url, imageKey: key}
-            const response = await axios.patch('http://localhost:8080/protected/userstore/editar', dataImage,  {
+            const response = await axios.patch('http://192.168.247.103:8080/protected/userstore/editar', dataImage,  {
             headers: { Authorization: `${localStorage.getItem("token")}` }
             })
             console.log('Sucesso ao atualizar Imagem (url e key) no MongoDB')
@@ -51,7 +51,7 @@ const CreateUserStore = () => {
     // Delete - apaga a imagem do Amazon S3 
     const deleteImage = async () => {
         try {
-          const response = await axios.delete(`http://localhost:8080/delete/${imageKey}`)
+          const response = await axios.delete(`http://192.168.247.103:8080/delete/${imageKey}`)
           setImageUrl('')
           setImageKey('')
           editImageProduct('', '')
@@ -71,7 +71,7 @@ const CreateUserStore = () => {
             try {
               const formData = new FormData()
               formData.append('file', selectedFile)
-              const response = await axios.post('http://localhost:8080/upload', formData, {
+              const response = await axios.post('http://192.168.247.103:8080/upload', formData, {
                       headers: {'Content-Type': 'multipart/form-data',}
               });
               const newImageUrl = response.data.imageUrl
@@ -119,10 +119,15 @@ const CreateUserStore = () => {
         }
     }
 
+    const RedefinirPage = () => {
+        navigate('/login')
+    }
+
     return (
         <div className="father-createUserStore">
             <h1>Criar Conta</h1>
-            <form>
+            <p className="esqueciSenha">Já possui conta? <a className="redefinir" onClick={RedefinirPage}>Entre aqui</a></p>
+            <form className="form-createUser">
                 <div className="divimage-createUserStore">
                     {imageUrl && <img src={imageUrl} alt="Imagem Enviada" className="img-product-createUserStore" />} {/* Exibe a imagem se houver um link */}<br/>
                     <input type="file" onChange={handleFileChange} accept="image/*" className='fileUpload-upload_s3'/>
@@ -132,59 +137,69 @@ const CreateUserStore = () => {
                     </div>
                 </div>
 
-                <br/>
-                <br/>                                      
-                <label className="labelnome-createUserStore">Nome da Empresa ou nome Pessoal</label><br/>
-                <input
-                type="text"
-                className="inputtext-createUserStore"
-                placeholder=""
-                onChange={(e) => setName(e.target.value)}
-                /><br/><br/>
-
-                <label className="labelnome-createUserStore">Nome completo</label><br/>
-                <input
+                <div className="textfield">
+                    <label className="labelnome-createUserStore"></label><br/>
+                    <input
                     type="text"
                     className="inputtext-createUserStore"
-                    placeholder=""
-                    onChange={(e) => setNamePerson(e.target.value)}
-                /><br /><br/>
+                    placeholder="Nome empresarial"
+                    onChange={(e) => setName(e.target.value)}
+                    />
+                </div>                
 
-                <label className="labelnome-createUserStore">Endereço</label><br/>
-                <input
-                type="text"
-                className="inputtext-createUserStore"
-                placeholder="Endereço"
-                onChange={(e) => setEndereco(e.target.value)}
-                /><br/><br/>
-
-                <label className="labelnome-createUserStore">Whatsapp</label><br/>
-                <input
+                <div className="textfield">
+                    <label className="labelnome-createUserStore"></label><br/>
+                    <input
+                        type="text"
+                        className="inputtext-createUserStore"
+                        placeholder="Nome pessoal"
+                        onChange={(e) => setNamePerson(e.target.value)}
+                    />
+                </div>
+                
+                <div className="textfield">
+                    <label className="labelnome-createUserStore"></label><br/>
+                    <input
                     type="text"
                     className="inputtext-createUserStore"
-                    placeholder="(00) 0000-0000"
-                    onChange={(e) => setPhone(e.target.value)}
-                /><br/><br/>
+                    placeholder="Endereço"
+                    onChange={(e) => setEndereco(e.target.value)}
+                    />
+                </div>
 
-                <label className="labelnome-createUserStore">Email pra fazer login</label><br/>
-                <input
-                    type="text"
-                    className="inputtext-createUserStore"
-                    placeholder=""
-                    onChange={(e) => setEmail(e.target.value)}
-                /><br/><br/>
-
-                <label className="labelnome-createUserStore">Senha</label><br/>
-                <input
-                    type="text"
-                    className="inputtext-createUserStore"
-                    placeholder=""
-                    onChange={(e) => setPassword(e.target.value)}
-                /><br />
+                <div className="textfield">
+                    <label className="labelnome-createUserStore">Whatsapp</label><br/>
+                    <input
+                        type="text"
+                        className="inputtext-createUserStore"
+                        placeholder="(00) 0000-0000"
+                        onChange={(e) => setPhone(e.target.value)}
+                    />
+                </div>
+                
+                <div className="textfield">
+                    <label className="labelnome-createUserStore"></label><br/>
+                    <input
+                        type="text"
+                        className="inputtext-createUserStore"
+                        placeholder="Email"
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                </div>
+                
+                <div className="textfield">
+                    <label className="labelnome-createUserStore"></label><br/>
+                    <input
+                        type="text"
+                        className="inputtext-createUserStore"
+                        placeholder="Senha"
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </div>
 
                 <div className="divCreateButton-createUserStore">
                     <button onClick={createUserStore} className="button-createUserStore">Criar Conta</button>
-                    <button onClick={cancelar} className="button-createUserStore">Cancelar</button>
+                    
                 </div>
             </form>
         </div>

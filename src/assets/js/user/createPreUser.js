@@ -15,7 +15,7 @@ const CreatePreUser = () => {
     const createUser = async (event) => {
         event.preventDefault()
         try {
-            const response = await axios.post("http://localhost:8080/user/criar", { name, phone, email, password, username})
+            const response = await axios.post("http://192.168.247.103:8080/user/criar", { name, phone, email, password, username})
             localStorage.setItem('AlunoUserName', name)
             localStorage.setItem('AlunoUserEmail', email)
             localStorage.setItem('AlunoUserid', response.data.user._id)
@@ -36,7 +36,7 @@ const CreatePreUser = () => {
         const email = checkEmail;
 
         try {
-            const response = await axios.get(`http://localhost:8080/user/${email}`);
+            const response = await axios.get(`http://192.168.247.103:8080/user/${email}`);
             
             // Se o usuário foi encontrado, você pode acessar seus dados na resposta
             const userId = response.data._id;

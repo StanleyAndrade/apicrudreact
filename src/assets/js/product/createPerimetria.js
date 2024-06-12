@@ -35,14 +35,14 @@ const CreatePerimetria = () => {
 
     const fetchUserData = async () => {
         try {
-            const response = await axios.get("http://localhost:8080/protected/userstore/buscar", {
+            const response = await axios.get("http://192.168.247.108:8080/protected/userstore/buscar", {
                 headers: { Authorization: `${localStorage.getItem("token")}` }
             });
             const getid = response.data.userData._id
             setUserId(getid);
 
             // Pega as categorias
-            const responseCategories = await axios.get(`http://localhost:8080/categorias/user/${response.data.userData._id}`);
+            const responseCategories = await axios.get(`http://192.168.247.108:8080/categorias/user/${response.data.userData._id}`);
             setCategories(responseCategories.data); 
 
 
@@ -54,7 +54,7 @@ const CreatePerimetria = () => {
     // Delete - apaga a imagem do Amazon S3 
     const deleteImage = async () => {
         try {
-            const response = await axios.delete(`http://localhost:8080/delete/${imageKey}`)
+            const response = await axios.delete(`http://192.168.247.108:8080/delete/${imageKey}`)
             setImageUrl('')
             setImageKey('')
             console.log('Sucesso ao apagar imagem no Amazon S3')
@@ -85,7 +85,7 @@ const CreatePerimetria = () => {
             const UserStoreid = localStorage.getItem('userStoreid')
 
             try {
-                const response = await axios.post('http://localhost:8080/perimetria/criar', { bracoRelaxadoEsquerdo, bracoRelaxadoDireito, bracoContraidoEsquerdo, bracoContraidoDireito, antebracoDireito, antebracoEsquerdo, pernaDireito, pernaEsquerdo, torax, abdomen, quadril, userid: Userid, storeid: UserStoreid})
+                const response = await axios.post('http://192.168.247.103:8080/perimetria/criar', { bracoRelaxadoEsquerdo, bracoRelaxadoDireito, bracoContraidoEsquerdo, bracoContraidoDireito, antebracoDireito, antebracoEsquerdo, pernaDireito, pernaEsquerdo, torax, abdomen, quadril, userid: Userid, storeid: UserStoreid})
                 console.log('Perimetria cadastrada com sucesso');
                 setShowFormCreate(false);
             } catch (error) {

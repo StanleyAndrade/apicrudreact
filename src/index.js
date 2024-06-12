@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Routes, Route, createBrowserRouter, RouterProv
 import CreateUserStore from './assets/js/userStore/createUserStore';
 import Home from './assets/js/pag/home';
 import Dashboard from './assets/js/userStore/dashboard';
+import LoginUserStore from './assets/js/userStore/loginUserStore';
 
 //Rotas
 const router = createBrowserRouter([
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Dashboard/>
+  },
+  {
+    path: "/login",
+    element: <LoginUserStore/>
   }
 ])
 

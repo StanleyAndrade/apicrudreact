@@ -1,6 +1,7 @@
 import { useEffect } from "react"
-import LoginUserStore from "../userStore/loginUserStore"
 import { useNavigate } from 'react-router-dom'
+import LoginUserStore from "../userStore/loginUserStore"
+import CreateUserStore from "../userStore/createUserStore"
 
 const Home = () => {
     
@@ -17,13 +18,13 @@ const Home = () => {
         <div className="app">
             <div className="father-text-and-form">
                 <div className="textos">
-                    <h1>Gym</h1>
-                    <h2>Calcule Perimetria
-                    <br/>e Dobras Cutâneas <br/>
-                    de forma automática e simplificada </h2>
+                    
+                    <p>Preparar COPY</p>
+                    <p>Faça avaliações físicas em segundos.</p>
+                    <p>Perimetria, Dobras Cutâneas e Treinos</p>
                 </div>
                 
-                <LoginUserStore/>
+                <CreateUserStore/>
             </div>
         </div>
     )

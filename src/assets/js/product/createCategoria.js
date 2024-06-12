@@ -21,14 +21,14 @@ const CreateCategoria = () => {
 
     const fetchUserData = async () => {
         try {
-            const response = await axios.get("http://localhost:8080/protected/userstore/buscar", {
+            const response = await axios.get("http://192.168.247.108:8080/protected/userstore/buscar", {
                 headers: { Authorization: `${localStorage.getItem("token")}` }
             });
             const getid = response.data.userData._id
             setUserId(getid);
 
             // Pega as categorias
-            const responseCategories = await axios.get(`http://localhost:8080/categorias/user/${response.data.userData._id}`);
+            const responseCategories = await axios.get(`http://192.168.247.108:8080/categorias/user/${response.data.userData._id}`);
             setCategories(responseCategories.data);
 
         } catch (error) {
@@ -43,7 +43,7 @@ const CreateCategoria = () => {
     // // Função para buscar todas as categorias
     // const getAllCategories = async () => {
     //     try {
-    //         const response = await axios.get('http://localhost:8080/categorias/buscar')
+    //         const response = await axios.get('http://192.168.247.108:8080/categorias/buscar')
     //         setCategories(response.data) //armazena as categorias em "categoria"
     //     } catch (error) {
     //         console.error("Erro ao buscar categorias no MongoDB", error)
@@ -53,7 +53,7 @@ const CreateCategoria = () => {
     // Função para criar uma nova categoria
     const createCategoria = (event) => {
         event.preventDefault()
-        axios.post('http://localhost:8080/categorias/criar', {nome, userid: userId})
+        axios.post('http://192.168.247.108:8080/categorias/criar', {nome, userid: userId})
             .then(() => {
                 //getAllCategories()
                 fetchUserData()
@@ -71,7 +71,7 @@ const CreateCategoria = () => {
     const editCategory = async (event) => {
         event.preventDefault()
         try {
-            const response = await axios.patch(`http://localhost:8080/categorias/editar/${showAndOcultForm._id}`, editedCategoria)
+            const response = await axios.patch(`http://192.168.247.108:8080/categorias/editar/${showAndOcultForm._id}`, editedCategoria)
             //getAllCategories()
             fetchUserData()
             setEditedCategoria({
@@ -105,7 +105,7 @@ const CreateCategoria = () => {
     // Função para deletar uma categoria
     const deleteCategoria = async (categoryId) => {
         try {
-            const response = await axios.delete(`http://localhost:8080/categoria/delete/${categoryId}`)
+            const response = await axios.delete(`http://192.168.247.103:8080/categoria/delete/${categoryId}`)
             //getAllCategories()
             fetchUserData()
             console.log('Sucesso ao apagar categoria no MongoDB')

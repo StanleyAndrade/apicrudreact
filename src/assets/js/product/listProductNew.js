@@ -9,7 +9,7 @@ const ListProductNew = () => {
   // Função para buscar todos os produtos
   const getAllProducts = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/produtos/buscar');
+      const response = await axios.get('http://192.168.247.103:8080/produtos/buscar');
       setProducts(response.data);
     } catch (error) {
       console.error('Erro ao buscar produtos:', error);
@@ -20,10 +20,10 @@ const ListProductNew = () => {
   const getProductsByCategory = async (categoryId) => {
     try {
       if (categoryId) {
-        const response = await axios.get(`http://localhost:8080/produtos/${categoryId}`);
+        const response = await axios.get(`http://192.168.247.103:8080/produtos/${categoryId}`);
         setProducts(response.data);
       } else {
-        const response = await axios.get('http://localhost:8080/produtos/buscar');
+        const response = await axios.get('http://192.168.247.103:8080/produtos/buscar');
         setProducts(response.data);
       }
     } catch (error) {
@@ -34,7 +34,7 @@ const ListProductNew = () => {
   // Função para buscar todas as categorias
   const getAllCategories = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/categorias/buscar');
+      const response = await axios.get('http://192.168.247.103:8080/categorias/buscar');
       setCategories(response.data);
     } catch (error) {
       console.error('Erro ao buscar categorias:', error);
@@ -57,7 +57,7 @@ const ListProductNew = () => {
 
   //*===================== Carrinho - coloca no model Pedidos =====================*
   const addToCart = (productNome, productDescricao, productTamanhos, productSabores, productPreco) => {
-    axios.post('http://localhost:8080/pedidos', {
+    axios.post('http://192.168.247.103:8080/pedidos', {
         nome: productNome,
         descricao: productDescricao,
         tamanhos: productTamanhos,

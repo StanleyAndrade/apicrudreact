@@ -1,0 +1,25 @@
+.inputtext-createProduct {
+    margin-bottom: 10px;
+    padding: 8px;
+    width: calc(100% - 16px);
+    box-sizing: border-box;
+}
+
+.createButton-createProduct {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.createButton-createProduct:hover {
+    background-color: #45a049;
+}
+
+.labelnome-createProduct {
+    font-weight: bold;
+    margin-top: 20px;
+}

@@ -11,7 +11,7 @@ const LoginUser = () => {
 
   
     const handleLogin = () => {
-      axios.post("http://localhost:8080/login", { email, password })
+      axios.post("http://192.168.247.103:8080/login", { email, password })
         .then((response) => {
           setToken(response.data.token);
           setUserEmail(email);     

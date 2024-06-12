@@ -12,6 +12,7 @@ import UploadImage from "../s3/upload_s3";
 import LogoutUserStore from "./logoutUserStore";
 import PerimetriaeDobrasM from "../product/PerimetriaeDobrasM";
 import PerimetriaeDobrasF from "../product/PerimetriaeDobrasF";
+import CreateTreino from "../product/createTreino";
 
 
 const Dashboard = () => {
@@ -30,8 +31,8 @@ const Dashboard = () => {
         setComponemte(<PerimetriaeDobrasF/>)
     }
 
-    function createCategoria () {
-        setComponemte(<CreateCategoria/>)
+    function createTreino () {
+        setComponemte(<CreateTreino/>)
     }
 
 
@@ -40,9 +41,10 @@ const Dashboard = () => {
         <div className="father-dashboard">
             <div className="barra-lateral-dashboard">
                 <Account/>
-                <button onClick={manageProduct} className="MeusprodutosButton-dashboard">Lista de Avaliações</button>
+                <button onClick={manageProduct} className="CreateButton-dashboard">Avaliações Feitas</button>
                 <button onClick={createAvaliacaoM} className="CreateButton-dashboard">Nova Avaliação<br/> Masculina</button>
                 <button onClick={createAvaliacaoF} className="CreateButton-dashboard">Nova Avaliação<br/> Feminina</button>
+                <button onClick={createTreino} className="CreateButton-dashboard">Criar Treino</button>
                 <LogoutUserStore/>
             </div>
 

@@ -32,7 +32,7 @@ const Account = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.get("http://localhost:8080/protected/userstore/buscar", {
+                const response = await axios.get("http://192.168.247.103:8080/protected/userstore/buscar", {
                     headers: { Authorization: `${localStorage.getItem("token")}` }
                 });
                 localStorage.setItem('userStorename', response.data.userData.name)
@@ -60,7 +60,7 @@ const Account = () => {
     const handleUpdateUserData = async (event) => {
         event.preventDefault()
         try {
-            const response = await axios.patch("http://localhost:8080/protected/userstore/editar", newUserData, {
+            const response = await axios.patch("http://192.168.247.103:8080/protected/userstore/editar", newUserData, {
                 headers: { Authorization: `${localStorage.getItem("token")}` }
             });
             setUserData(response.data.userData);
@@ -101,7 +101,7 @@ const Account = () => {
             try {
               const formData = new FormData()
               formData.append('file', selectedFile)
-              const response = await axios.post('http://localhost:8080/upload', formData, {
+              const response = await axios.post('http://192.168.247.103:8080/upload', formData, {
                       headers: {'Content-Type': 'multipart/form-data',}
               });
               const newImageUrl = response.data.imageUrl
@@ -126,7 +126,7 @@ const Account = () => {
     const editImageProduct = async (url, key) => {
         try {
             const dataImage = {imageUrl: url, imageKey: key}
-            const response = await axios.patch('http://localhost:8080/protected/userstore/editar', dataImage,  {
+            const response = await axios.patch('http://192.168.247.103:8080/protected/userstore/editar', dataImage,  {
             headers: { Authorization: `${localStorage.getItem("token")}` }
             })
             console.log('Sucesso ao atualizar Imagem (url e key) no MongoDB')
@@ -139,7 +139,7 @@ const Account = () => {
      //*===================== DELETE - Image =====================*
      const deleteImage = async () => {
         try {
-          const response = await axios.delete(`http://localhost:8080/delete/${userData.imageKey}`)
+          const response = await axios.delete(`http://192.168.247.103:8080/delete/${userData.imageKey}`)
           setImageUrl('')
           setImageKey('')
           editImageProduct('', '')

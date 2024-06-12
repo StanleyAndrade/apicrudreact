@@ -4,3 +4,53 @@
     align-items: start;
     justify-content: center;
 }
+
+.textos h1 {
+    font-size: 30px;
+    margin: 0px;
+}
+
+.textos p {
+    font-size: 20px;
+    margin: 0px;
+}
+
+/* Media Queries para responsividade */
+@media (max-width: 768px) {
+    .app{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .father-text-and-form{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .textos{
+        text-align: center;
+        align-items: center;
+    }
+
+    .textos h1 {
+        font-size: 28px;
+    }
+
+    .textos h2 {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .textos h1 {
+        font-size: 24px;
+    }
+
+    .textos h2 {
+        font-size: 18px;
+    }
+
+    .father-text-and-form {
+        padding: 10px;
+    }
+}

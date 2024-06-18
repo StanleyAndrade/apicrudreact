@@ -1,25 +1,57 @@
-.inputtext-createProduct {
-    margin-bottom: 10px;
-    padding: 8px;
-    width: calc(100% - 16px);
-    box-sizing: border-box;
+.father-Treino{
+    padding-bottom: 120px;
 }
 
-.createButton-createProduct {
-    margin-top: 10px;
-    padding: 10px 20px;
+.div-Treino{
+    padding: 20px;
+}
+
+.labelnome-createTreino{
+    /* Estilos para rótulos */
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.inputtext-createTreio{
+    /* Estilos para campos de entrada de texto */
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.moreTreinoButton{
+    /* Estilos para botão de criação */
     background-color: #4CAF50;
-    color: white;
     border: none;
+    color: white;
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
     cursor: pointer;
     border-radius: 4px;
 }
 
-.createButton-createProduct:hover {
+.moreTreinoButton:hover{
+    /* Estilos de hover para botão de criação */
     background-color: #45a049;
 }
 
-.labelnome-createProduct {
-    font-weight: bold;
-    margin-top: 20px;
+.createButton-createTreino{
+    width: 60%;
+    padding: 16px 0px;
+    margin: 20px;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: #ffffff;
+    background: #212529;
+    cursor: pointer;
+    box-shadow: 0px 10px 40px -12px #fdfffe49;
 }

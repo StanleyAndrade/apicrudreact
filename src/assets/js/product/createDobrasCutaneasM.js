@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { ImWhatsapp } from "react-icons/im";
 
 const CreateDobrasCutaneas = () => {
     const navigate = useNavigate()
@@ -47,15 +48,19 @@ const userPhone = localStorage.getItem('userPhone')
 //Mensagem do whatsapp
 var zap = `https://wa.me/55${userPhone}?text=`
 var tudoJunto = `
-*${userStorename}*
+*Resultado da Avaliação Física*
+Feita por: *${userStorename}*
 ${userStoreendereco}
 Aluno: *${name}*
 
+*RESULTADO:*
 *Percentual de Gordura:* ${resultadopercentualdegordura}%
 *Peso Atual:* ${pesoatual}kg
 
 Resultado completo no site:
-http://www.localhost:3001/${username}
+http://www.192.168.247.103:3000/${username}
+
+Compartilhe essa novidade. 
 `;    
     
 //Transforma em texto de Whatsapp
@@ -99,7 +104,7 @@ window.open(codigoTodo, '_blank')
             const Userid = localStorage.getItem('AlunoUserid')
             const UserStoreid = localStorage.getItem('userStoreid')
                 try {
-                    const response = await axios.post('http://192.168.247.103:8080/dobrascutaneas/criar', { subescapular, triciptal, abdominal, suprailiaca, peitoral, coxa, biciptal, axilarmedia, panturrilhamedia, somatoriodasdobras: somatorio7Dobras, resultadopercentualdegordura: G, pesoatual, pesogordo, pesomagro, pesoideal, idade, userid: Userid, storeid: UserStoreid})
+                    const response = await axios.post('http://15.228.166.75:8080/dobrascutaneas/criar', { subescapular, triciptal, abdominal, suprailiaca, peitoral, coxa, biciptal, axilarmedia, panturrilhamedia, somatoriodasdobras: somatorio7Dobras, resultadopercentualdegordura: G, pesoatual, pesogordo, pesomagro, pesoideal, idade, userid: Userid, storeid: UserStoreid})
                     console.log('Perimetria cadastrada com sucesso');
                     setShowFormCreate(false);
                 } catch (error) {
@@ -111,7 +116,7 @@ window.open(codigoTodo, '_blank')
     };
 
     return (
-        <div >
+        <div>
             {showFormCreate ? (
                 
                 <div className="father-createProduct">
@@ -239,14 +244,15 @@ window.open(codigoTodo, '_blank')
                     <div className="div-categoria-e-createButton-createProduct">
                         <button type="button" onClick={createProduct} className="createButton-createProduct">Concluir</button>
                          {/* Botão para cancelar */}
-                         <button type="button" onClick={cancelar} className="cancelButton-createProduct"> Cancelar </button>
                     </div>
                 </form>
                 </div>
             ) : ( 
-                <div>
-                    <h3>Enviar Resultado via Whatsapp</h3>
-                                    <butto onClick={sendWhatsapp} className="createAccount">Enviar</butto>
+                <div className="div-btnzap">
+                    <button onClick={sendWhatsapp} className="btn-zap">
+                        <ImWhatsapp className="foto-zap"/>
+                        <h3>Enviar Resultado</h3>
+                    </button>  
                 </div>
             )}
         </div>

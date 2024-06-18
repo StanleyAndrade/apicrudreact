@@ -15,7 +15,7 @@ const LoginUserStore = () => {
 
     const handleLogin = async (event) => {
         try {
-            const response = await axios.post("http://192.168.247.103:8080/userstore/login", { email, password })
+            const response = await axios.post("http://15.228.166.75:8080/userstore/login", { email, password })
             setToken(response.data.token)
             // Salva o token e o email no armazenamento local (localStorage)
             localStorage.setItem('token', response.data.token);
@@ -30,7 +30,9 @@ const LoginUserStore = () => {
         handleLogin()
     }, [])
 
-    //*===================== LOGIN =====================*
+    const RedefinirPage = () => {
+        navigate('/redefinir-senha')
+      }
 
     return (
         <div>
@@ -62,7 +64,7 @@ const LoginUserStore = () => {
                                 </label>
                             </div>
                             <button className="btn-login"onClick={(e) => { e.preventDefault(); handleLogin()}}>ENTRAR</button>
-                            <p className="esqueciSenha"> Esqueci senha. <a className="redefinir" href="">Redefinir senha</a></p>
+                            <p className="esqueciSenha"> Esqueci senha. <a className="redefinir" onClick={RedefinirPage}>Redefinir senha</a></p>
                         </form>
                     </div>
                 </div>

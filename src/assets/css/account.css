@@ -1,12 +1,61 @@
+/* Perfil */
+
+.user-profile {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+}
+
+.profile-icon {
+    font-size: 50px;
+    color: #212529;
+    margin-right: 10px;
+}
+
+.user-info h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #6c757d;
+}
+
+.user-info p {
+    margin: 0;
+    color: gray;
+    font-size: 14px;
+}
+
+/* Logout */
+
+.settings{
+    display: flex;
+    align-items: center;
+}
+
+.profile-icon-logout{
+    font-size: 30px;
+    color: #212529;
+    margin-right: 10px;
+}
+
+
+
 .father-account{
     white-space: nowrap; /* Impede que o texto quebre em várias linhas */
-    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;    
+    font-family: Arial, sans-serif;
 }
 
 .menu-account{
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
 .img-account {
@@ -37,13 +86,13 @@
 }
 
 .editButton-account{
-    background-color: #e08115;
+    background-color: #555555;
     border: none;
-    border-radius: 25px;
+    border-radius: 5px;
     color: white;
     font-size: 11px;
     cursor: pointer;
-    padding: 10px 32px;
+    padding: 1px 30px;
     font-weight: 600;
 }
 
@@ -86,11 +135,20 @@
     border-radius: 5px;
     padding: 5px;
     padding-right: 30px;
-    margin: 2px;
+    margin: 0px;
+    width: 60%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #f9fafb;
+    box-shadow: 0px 10px 40px #00000056;
+    margin: 10px 0;
 }
 
 .salvar-account{
-    background-color: #975100;
+    background-color: #555555;
     border: none;
     border-radius: 25px;
     color: white;
@@ -107,7 +165,7 @@
 }
 
 .cancel-account{
-    background-color: #975100;
+    background-color: #555555;
     border: none;
     border-radius: 25px;
     color: white;

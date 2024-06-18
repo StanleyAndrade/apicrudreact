@@ -13,7 +13,7 @@ function ImageUpload({ onImageUrlChange, onImageKeyChange }) {
             const formData = new FormData();
             formData.append('file', selectedFile);
 
-            const response = await axios.post('http://192.168.247.103:8080/upload', formData, {
+            const response = await axios.post('http://15.228.166.75:8080/upload', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 }
@@ -49,7 +49,7 @@ function ImageUpload({ onImageUrlChange, onImageKeyChange }) {
 
     const deleteImage = async () => {
         try {
-            const response = await axios.delete(`http://192.168.247.103:8080/delete/${imageKey}`);
+            const response = await axios.delete(`http://15.228.166.75:8080/delete/${imageKey}`);
             console.log('Imagem deletada com sucesso')
             setMessage('Imagem deletada com sucesso');
             setImageUrl('')

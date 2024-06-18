@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import axios from "axios";
-import foto from '/ProjetosVScode/frontend-userStore-gym/src/assets/img/ok.webp'
+import { FaRegCheckCircle } from "react-icons/fa";
 
 const CreatePreUser = () => {
     //*===================== POST =====================*
@@ -15,7 +15,7 @@ const CreatePreUser = () => {
     const createUser = async (event) => {
         event.preventDefault()
         try {
-            const response = await axios.post("http://192.168.247.103:8080/user/criar", { name, phone, email, password, username})
+            const response = await axios.post("http://15.228.166.75:8080/user/criar", { name, phone, email, password, username})
             localStorage.setItem('AlunoUserName', name)
             localStorage.setItem('AlunoUserEmail', email)
             localStorage.setItem('AlunoUserid', response.data.user._id)
@@ -36,14 +36,14 @@ const CreatePreUser = () => {
         const email = checkEmail;
 
         try {
-            const response = await axios.get(`http://192.168.247.103:8080/user/${email}`);
+            const response = await axios.get(`http://15.228.166.75:8080/user/${email}`);
             
             // Se o usuário foi encontrado, você pode acessar seus dados na resposta
-            const userId = response.data._id;
-            const getEmail = response.data.email
-            const getName = response.data.name
-            const getUsername = response.data.username
-            const getUserPhone = response.data.phone
+            const userId = response.data.user._id;
+            const getEmail = response.data.user.email
+            const getName = response.data.user.name
+            const getUsername = response.data.user.username
+            const getUserPhone = response.data.user.phone
             
             // Armazene o _id do usuário no localStorage ou faça o que precisar com ele
             localStorage.setItem('AlunoUserName', getName)
@@ -57,12 +57,12 @@ const CreatePreUser = () => {
             setShowFormCreate(false)
         } catch (error) {
             console.error('Erro ao buscar usuário', error);
+            setShowFormCreate(true)
         }
     };
 
     return (
-        <div>
-            
+        <div> 
             {showFormCreate ? (
                 <div className="father-createProduct">
                     <h3 className="title-createProduct">Passo 1 <br/> Dados do Aluno</h3>
@@ -70,26 +70,26 @@ const CreatePreUser = () => {
                         <form>
                             <p>Usuário sem cadastro na Gym</p>
                             <input
-                            className="inputtext-createProduct"
+                            className="inputtext-createPreUser"
                             type="text"
                             placeholder="Nome"
                             onChange={(e) => setName(e.target.value)}
                             /><br />
                             <input
-                            className="inputtext-createProduct"
+                            className="inputtext-createPreUser"
                                 type="text"
                                 placeholder="(00) 0000-0000"
                                 onChange={(e) => setPhone(e.target.value)}
                             /><br />
                             <input
-                            className="inputtext-createProduct"
+                            className="inputtext-createPreUser"
                                 type="text"
                                 placeholder="Email"
                                 onChange={(e) => setEmail(e.target.value)}
                             /><br />
                             <p>Nome de Usuário</p>
                             <input
-                            className="inputtext-createProduct"
+                            className="inputtext-createPreUser"
                                 type="text"
                                 placeholder="nomedeusuario"
                                 onChange={(e) => setusername(e.target.value)}
@@ -101,8 +101,8 @@ const CreatePreUser = () => {
                         <p>Usuário cadastrado na Gym</p>
                         <form>
                             <input
-                            className="inputtext-createProduct"
-                                type="text"
+                            className="inputtext-createPreUser"
+                                type="email"
                                 placeholder="Email"
                                 onChange={(e) => setcheckEmail(e.target.value)}
                             /><br />
@@ -111,7 +111,10 @@ const CreatePreUser = () => {
                     </div>
                 </div>
             ) : (
-                <img src={foto} className="foto-Ok"></img>
+                <div className="div-CheckCircle">
+                    <FaRegCheckCircle className="foto-Ok"/>
+                    <p>Concluído</p>
+                </div>
             )}
         </div>
     )

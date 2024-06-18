@@ -4,12 +4,18 @@ import '../src/assets/css/login.css'
 import '../src/assets/css/dashboard.css'
 import '../src/assets/css/manageProduct.css'
 import '../src/assets/css/account.css'
-import '../src/assets/css/createProduct.css'
+import '../src/assets/css/createDobras.css'
 import '../src/assets/css/createCategoria.css'
 import '../src/assets/css/upload_s3.css'
-import '../src/assets/css/ProductAndCategory.css'
+import '../src/assets/css/perimetriaedobras.css'
 import '../src/assets/css/logoutUserStore.css'
 import '../src/assets/css/createUserStore.css'
+import '../src/assets/css/popupPositivo.css'
+import '../src/assets/css/popupNegativo.css'
+import '../src/assets/css/escolha.css'
+import '../src/assets/css/createTreino.css'
+import '../src/assets/css/resetPasswordrequest.css'
+
 
 // Product
 //import ManageProduct from './assets/js/product/manageProduct';

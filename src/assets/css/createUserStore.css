@@ -94,5 +94,28 @@
 }
 
 .foto-Ok{
-    width: 150px;
+    font-size: 100px;
+}
+
+.foto-zap{
+    font-size: 100px;
+    padding-right: 10px;
+}
+
+.div-CheckCircle{
+    align-items: center;
+    text-align: center;
+}
+
+.div-btnzap{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.btn-zap{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
 }

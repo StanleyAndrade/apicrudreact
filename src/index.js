@@ -10,6 +10,10 @@ import CreateUserStore from './assets/js/userStore/createUserStore';
 import Home from './assets/js/pag/home';
 import Dashboard from './assets/js/userStore/dashboard';
 import LoginUserStore from './assets/js/userStore/loginUserStore';
+import PerimetriaeDobrasM from './assets/js/product/PerimetriaeDobrasM';
+import { ComponenteProvider } from './assets/js/product/Context';  // Certifique-se de ajustar o caminho confo
+import ResetPasswordRequest from './assets/js/userStore/resetPasswordrequest';
+import ResetPassword from './assets/js/userStore/resetPassword';
 
 //Rotas
 const router = createBrowserRouter([
@@ -28,13 +32,27 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginUserStore/>
-  }
+  },
+  {
+    path: "/masculino",
+    element: <PerimetriaeDobrasM/>
+  },
+  {
+    path: "/redefinir-senha",
+    element: <ResetPasswordRequest/>
+  },
+  {
+    path: "/reset-password/:token",
+    element: <ResetPassword/>
+  },
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router}/>
+     <ComponenteProvider>
+      <RouterProvider router={router}/>
+    </ComponenteProvider>
   </React.StrictMode>,
 );
 

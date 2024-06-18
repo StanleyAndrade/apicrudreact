@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaDumbbell, FaUserCircle } from 'react-icons/fa';
+import { IoIosLogOut } from "react-icons/io";
 
 
 const Account = () => {
@@ -8,19 +10,21 @@ const Account = () => {
     const [imageUrl, setImageUrl] = useState('') //armazena Url da imagem
     const [selectedFile, setSelectedFile] = useState(null); //armazena o arquivo do upload
     const [userData, setUserData] = useState(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(true);
     const [newUserData, setNewUserData] = useState({
         name: "",
         endereco: "",
         phone: "",
         email: "",
-        horarioDeFuncionamento: "",
-        time: "",
-        payment: "",
         nameperson: "",
-        username: "",
-        imageUrl: '',
-        imageKey: '',
     });
+    const [popUpPositivo, setpopUpPositivo] = useState("");
+    const [popUpNegativo, setpopUpNegativo] = useState("");
+
+    const clearLocalStorage = () => {
+        localStorage.clear();
+        navigate('/')
+    };
     
     const [isEditing, setIsEditing] = useState(false);
     const navigate = useNavigate()
@@ -32,7 +36,7 @@ const Account = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.get("http://192.168.247.103:8080/protected/userstore/buscar", {
+                const response = await axios.get("http://15.228.166.75:8080/protected/userstore/buscar", {
                     headers: { Authorization: `${localStorage.getItem("token")}` }
                 });
                 localStorage.setItem('userStorename', response.data.userData.name)
@@ -60,12 +64,11 @@ const Account = () => {
     const handleUpdateUserData = async (event) => {
         event.preventDefault()
         try {
-            const response = await axios.patch("http://192.168.247.103:8080/protected/userstore/editar", newUserData, {
+            const response = await axios.patch("http://15.228.166.75:8080/protected/userstore/editar", newUserData, {
                 headers: { Authorization: `${localStorage.getItem("token")}` }
             });
             setUserData(response.data.userData);
             setIsEditing(false);
-            alert("Dados do usuário atualizados com sucesso!");
         } catch (error) {
             console.error("Erro ao atualizar os dados do usuário:", error);
         }
@@ -101,7 +104,7 @@ const Account = () => {
             try {
               const formData = new FormData()
               formData.append('file', selectedFile)
-              const response = await axios.post('http://192.168.247.103:8080/upload', formData, {
+              const response = await axios.post('http://15.228.166.75:8080/upload', formData, {
                       headers: {'Content-Type': 'multipart/form-data',}
               });
               const newImageUrl = response.data.imageUrl
@@ -126,7 +129,7 @@ const Account = () => {
     const editImageProduct = async (url, key) => {
         try {
             const dataImage = {imageUrl: url, imageKey: key}
-            const response = await axios.patch('http://192.168.247.103:8080/protected/userstore/editar', dataImage,  {
+            const response = await axios.patch('http://15.228.166.75:8080/protected/userstore/editar', dataImage,  {
             headers: { Authorization: `${localStorage.getItem("token")}` }
             })
             console.log('Sucesso ao atualizar Imagem (url e key) no MongoDB')
@@ -139,7 +142,7 @@ const Account = () => {
      //*===================== DELETE - Image =====================*
      const deleteImage = async () => {
         try {
-          const response = await axios.delete(`http://192.168.247.103:8080/delete/${userData.imageKey}`)
+          const response = await axios.delete(`http://15.228.166.75:8080/delete/${userData.imageKey}`)
           setImageUrl('')
           setImageKey('')
           editImageProduct('', '')
@@ -155,9 +158,23 @@ const Account = () => {
         <div className="father-account">
         {userData && !isEditing && (
             <div className="menu-account">
-                <img src={userData.imageUrl} className="img-account"/>
-                <h2 className="name-account"><b></b>{userData.name}</h2>
-
+                <div className="user-profile">
+                    <div className="profile-info">
+                        <FaUserCircle className="profile-icon" />
+                        <div className="user-info">
+                            <h3>{userData.name}</h3>
+                            <p>{userData.email}</p>
+                            <button onClick={handleEditButtonClick} className="editButton-account">Editar</button>
+                        </div>
+                    </div>
+                    <div className="settings">
+                        {isLoggedIn && ( // Corrigido aqui
+                            <button className="bottom-bar-button" onClick={clearLocalStorage}>
+                                <IoIosLogOut className="profile-icon-logout" />
+                            </button>
+                        )}
+                    </div>
+                </div>
 
                 <div className="completdata">
                     <p className="text-account"><b>Endereço:</b> <br/>{userData.endereco}</p>
@@ -177,9 +194,7 @@ const Account = () => {
                     <p className="text-account"><b>Proprietário:</b> <br/>{userData.nameperson}</p>
                 </div>
 
-                <div className="div-editButton-account">
-                    <button onClick={handleEditButtonClick} className="editButton-account">Meus Dados</button>
-                </div>                 
+                                 
 
             </div>
         )}
@@ -192,15 +207,13 @@ const Account = () => {
                 <input type="text" name="endereco" value={newUserData.endereco} onChange={handleInputChange} placeholder="Novo Endereço" className="input-account" />
                 <input type="text" name="phone" value={newUserData.phone} onChange={handleInputChange} placeholder="Novo Telefone" className="input-account" />
                 <input type="text" name="email" value={newUserData.email} onChange={handleInputChange} placeholder="Novo Email" className="input-account" />
-                <input type="text" name="horarioDeFuncionamento" value={newUserData.horarioDeFuncionamento} onChange={handleInputChange} placeholder="Novo Horário de Funcionamento" className="input-account" />
-                <input type="text" name="time" value={newUserData.time} onChange={handleInputChange} placeholder="Novo Horário" className="input-account" />
-                <input type="text" name="payment" value={newUserData.payment} onChange={handleInputChange} placeholder="Nova Forma de Pagamento" className="input-account" />
                 <input type="text" name="nameperson" value={newUserData.nameperson} onChange={handleInputChange} placeholder="Novo Nome da Pessoa" className="input-account" />
                 <br/>
                 <button onClick={handleUpdateUserData} className="salvar-account">Salvar</button>
                 <button onClick={handleCancelButtonClick} className="cancel-account">Cancelar</button>
             </div>
         )}
+
     </div>        
     )
 }

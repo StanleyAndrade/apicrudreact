@@ -1,84 +1,58 @@
-.father-dashboard{
-    display: flex;
-    flex-direction: row;
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.barra-lateral-dashboard{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #583002;
-    color: #ffffff;
-    border-radius: 0px 50px 50px 0px;
-    padding-right: 2%;
-    margin-right: 1%;
-    padding-left: 10px;
-    padding-bottom: 3%;
-    height: 100vh; /* Altura igual à altura da viewport */
-}
-
-.div-dashboard{
+.father-dashboard {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding-top: 2px;
+    font-family: Arial, sans-serif;
 }
 
-.div-createProduto-categoria-dashboard{
+/* Barra de Navegação */
+
+.bottom-bar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 10px 0;
+    background-color: #f9fafb;
+    z-index: 1000; /* Garante que a barra esteja no topo */
+}
+
+.div-buttons, .bottom-bar {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1px 0px;
-    margin-left: 15px;   
+    justify-content: center;
+    gap: 55px;
+    margin: 0;
 }
 
-.MeusprodutosButton-dashboard{
-    background-color: #975100;
+.bottom-bar-button {
+    background-color: #f9fafb;
+    color: #212529;
     border: none;
-    border-radius: 25px;
-    color: white;
-    font-size: 11px;
-    font-weight: 600;
-    cursor: pointer;
-    padding: 10px 15px; /* Ajuste o padding horizontal conforme necessário */
-    white-space: nowrap; /* Impede que o texto quebre em várias linhas */
-    display: inline-block; /* Garante que o botão tenha a largura necessária para o conteúdo */
-    line-height: 1; /* Mantém o texto centralizado verticalmente */
-    margin-top: 12px;
-}
-
-.CreateButton-dashboard{
-    background-color: #975100;
-    border: none;
-    border-radius: 25px;
-    color: white;
-    font-size: 11px;
-    font-weight: 600;
-    cursor: pointer;
-    padding: 10px 25px; /* Ajuste o padding horizontal conforme necessário */
-    white-space: nowrap; /* Impede que o texto quebre em várias linhas */
-    display: inline-block; /* Garante que o botão tenha a largura necessária para o conteúdo */
-    line-height: 1; /* Mantém o texto centralizado verticalmente */
-    margin-top: 10px;
-}
-
-.CategoriaButton-dashboard{
-    background-color: #975100;
-    border: none;
-    border-radius: 25px;
-    color: white;
-    font-size: 11px;
-    font-weight: 600;
-    cursor: pointer;
-    padding: 10px 40px; /* Ajuste o padding horizontal conforme necessário */
-    white-space: nowrap; /* Impede que o texto quebre em várias linhas */
-    display: inline-block; /* Garante que o botão tenha a largura necessária para o conteúdo */
-    line-height: 1; /* Mantém o texto centralizado verticalmente */
-    margin-top: 10px;
-}
-
-.divComponente-dashboard{
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
     display: flex;
-    flex-direction: row;
-    background-color: black;
+    align-items: center;
+    gap: 0px;
+    font-size: 12px;
+    margin: 4px 0px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.bottom-bar-button:hover {
+
+}
+
+.icone-buttonbar{
+    font-size: 30px;
+}
+
+.icone-buttonbar-dumbble{
+    font-size: 34px;
 }

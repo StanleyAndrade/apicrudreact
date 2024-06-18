@@ -12,6 +12,9 @@ const CreateTreino = () => {
     const [treino6, setTreino6] = useState([{ grupoMuscular: "", exercicio: "", series: "", repeticoes: "" }]);
     const [treino7, setTreino7] = useState([{ grupoMuscular: "", exercicio: "", series: "", repeticoes: "" }]);
 
+    const [popUpPositivo, setpopUpPositivo] = useState("");
+    const [popUpNegativo, setpopUpNegativo] = useState("");
+
     const handleInputChange = (index, event, setTreino, treino) => {
         const values = [...treino];
         values[index] = {
@@ -26,12 +29,23 @@ const CreateTreino = () => {
             const Userid = localStorage.getItem('AlunoUserid');
             const UserStoreid = localStorage.getItem('userStoreid');
             try {
-                await axios.post('http://192.168.247.103:8080/treinogym/criar', { treino1, treino2, treino3, treino4, treino5, treino6, treino7});
+                await axios.post('http://15.228.166.75:8080/treinogym/criar', { treino1, treino2, treino3, treino4, treino5, treino6, treino7});
                 console.log('Treino cadastrado com sucesso');
+                setpopUpPositivo("Treino criado com sucesso!");
+                setTimeout(() => {
+                    setpopUpPositivo("")// Oculta o popup após 4 segundos
+                }, 3000);
+                setTimeout(() => {
+                    window.location.reload()// Navega após 3 segundos
+                }, 2500);
             } catch (error) {
+                setpopUpNegativo("Erro ao criar usuário!");
+                setTimeout(() => setpopUpNegativo(""), 4000); // Oculta o popup após 3 segundos
                 console.error('Erro ao criar Treino: ', error);
             }
         } catch (error) {
+            setpopUpNegativo("Erro ao criar usuário!");
+            setTimeout(() => setpopUpNegativo(""), 4000); // Oculta o popup após 3 segundos
             console.error('Erro ao criar Treino: ', error);
         }
     };
@@ -41,7 +55,7 @@ const CreateTreino = () => {
     };
 
     return (
-        <div>
+        <div className="father-Treino">
             <form>
                 {[
                     { treino: treino1, setTreino: setTreino1, label: "Treino A" },
@@ -52,8 +66,8 @@ const CreateTreino = () => {
                     { treino: treino6, setTreino: setTreino6, label: "Treino F" },
                     { treino: treino7, setTreino: setTreino7, label: "Treino G" }
                 ].map(({ treino, setTreino, label }, treinoIndex) => (
-                    <div key={treinoIndex}>
-                        <label htmlFor={`treino${treinoIndex + 1}`} className="labelnome-createProduct">{label}</label>
+                    <div key={treinoIndex} className="div-Treino">
+                        <label htmlFor={`treino${treinoIndex + 1}`} className="labelnome-createTreino">{label}</label>
                         <br/>
                         {treino.map((field, index) => (
                             <div key={index}>
@@ -62,7 +76,7 @@ const CreateTreino = () => {
                                         type="text"
                                         name="grupoMuscular"
                                         placeholder="Ex.: Peito e Tríceps"
-                                        className="inputtext-createProduct"
+                                        className="inputtext-createTreio"
                                         value={field.grupoMuscular}
                                         onChange={(e) => handleInputChange(index, e, setTreino, treino)}
                                     />
@@ -71,7 +85,7 @@ const CreateTreino = () => {
                                     type="text"
                                     name="exercicio"
                                     placeholder="Exercicio"
-                                    className="inputtext-createProduct"
+                                    className="inputtext-createTreio"
                                     value={field.exercicio}
                                     onChange={(e) => handleInputChange(index, e, setTreino, treino)}
                                 />
@@ -79,7 +93,7 @@ const CreateTreino = () => {
                                     type="text"
                                     name="series"
                                     placeholder="Series"
-                                    className="inputtext-createProduct"
+                                    className="inputtext-createTreio"
                                     value={field.series}
                                     onChange={(e) => handleInputChange(index, e, setTreino, treino)}
                                 />
@@ -87,19 +101,29 @@ const CreateTreino = () => {
                                     type="text"
                                     name="repeticoes"
                                     placeholder="Repetições"
-                                    className="inputtext-createProduct"
+                                    className="inputtext-createTreio"
                                     value={field.repeticoes}
                                     onChange={(e) => handleInputChange(index, e, setTreino, treino)}
                                 />
                                 <br />
                             </div>
                         ))}
-                        <button type="button" onClick={() => addExerciseFields(setTreino, treino)} className="createButton-createProduct">+</button>
+                        <button type="button" onClick={() => addExerciseFields(setTreino, treino)} className="moreTreinoButton">+</button>
                         <br />
                     </div>
                 ))}
-                <button type="button" onClick={createTreino} className="createButton-createProduct">Cadastrar treino</button>
+                <button type="button" onClick={createTreino} className="createButton-createTreino">Cadastrar treino</button>
             </form>
+            {popUpPositivo && (
+                <div className="popupPositivo">
+                    <p>{popUpPositivo}</p>
+                </div>
+            )}
+            {popUpNegativo && (
+                <div className="popupNegativo">
+                    <p>{popUpNegativo}</p>
+                </div>
+            )}
         </div>
     );
 }

@@ -17,7 +17,7 @@ const ProtectedRoute = () => {
 
     // Faça a chamada para a rota protegida com o token JWT
     axios
-      .get('http://192.168.247.103:8080/protected', {
+      .get('http://15.228.166.75:8080/protected', {
         headers: { Authorization: token },
       })
       .then((response) => {

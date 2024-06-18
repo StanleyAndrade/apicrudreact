@@ -8,10 +8,10 @@ const PerimetriaeDobrasF = () => {
     return (
         <div>
             <h2 className="FM">Avaliação Feminina</h2>
-            <div className="divComponent-ProductAndCategory"> 
-            <div className="component1-ProductAndCategory"><CreatePreUser/></div>
-            <div className="component1-ProductAndCategory"><CreatePerimetria/></div>
-            <div className="component2-ProductAndCategory"><CreateDobrasCutaneasF/></div>
+            <div className="divComponent-PerimetriaeDobras"> 
+            <div className="component1-PerimetriaeDobras"><CreatePreUser/></div>
+            <div className="component1-PerimetriaeDobras"><CreatePerimetria/></div>
+            <div className="component2-PerimetriaeDobras"><CreateDobrasCutaneasF/></div>
             </div>
         </div>
     )

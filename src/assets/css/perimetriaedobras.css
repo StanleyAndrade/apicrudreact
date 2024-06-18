@@ -1,0 +1,39 @@
+.divComponent-PerimetriaeDobras{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 100px;
+    padding: 10px;
+}
+
+.component1-PerimetriaeDobras{
+    padding-right: 10px;
+    padding-bottom: 40px;
+}
+
+.FM{
+    text-align: center;
+}
+
+@media only screen and (max-width: 950px) {
+    .divComponent-PerimetriaeDobras{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+    .component1-PerimetriaeDobras{
+        padding-right: 0px;
+    }
+    
+}
+
+@media only screen and (max-width: 600px) {
+    .divComponent-PerimetriaeDobras{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+    .component1-PerimetriaeDobras{
+        padding-right: 0px;
+    }
+}

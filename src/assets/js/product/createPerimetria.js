@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import foto from '/ProjetosVScode/frontend-userStore-gym/src/assets/img/ok.webp'
+import { FaRegCheckCircle } from "react-icons/fa";
 
 const CreatePerimetria = () => {
     const navigate = useNavigate()
@@ -85,7 +85,7 @@ const CreatePerimetria = () => {
             const UserStoreid = localStorage.getItem('userStoreid')
 
             try {
-                const response = await axios.post('http://192.168.247.103:8080/perimetria/criar', { bracoRelaxadoEsquerdo, bracoRelaxadoDireito, bracoContraidoEsquerdo, bracoContraidoDireito, antebracoDireito, antebracoEsquerdo, pernaDireito, pernaEsquerdo, torax, abdomen, quadril, userid: Userid, storeid: UserStoreid})
+                const response = await axios.post('http://15.228.166.75:8080/perimetria/criar', { bracoRelaxadoEsquerdo, bracoRelaxadoDireito, bracoContraidoEsquerdo, bracoContraidoDireito, antebracoDireito, antebracoEsquerdo, pernaDireito, pernaEsquerdo, torax, abdomen, quadril, userid: Userid, storeid: UserStoreid})
                 console.log('Perimetria cadastrada com sucesso');
                 setShowFormCreate(false);
             } catch (error) {
@@ -223,12 +223,14 @@ const CreatePerimetria = () => {
                     <div className="div-categoria-e-createButton-createProduct">
                         <button type="button" onClick={createProduct} className="createButton-createProduct">Concluir</button>
                          {/* Botão para cancelar */}
-                         <button type="button" onClick={cancelar} className="cancelButton-createProduct"> Cancelar </button>
                     </div>
                 </form>
                 </div>
             ) : ( 
-                <img src={foto} className="foto-Ok"></img>
+                <div className="div-CheckCircle">
+                    <FaRegCheckCircle className="foto-Ok"/>
+                    <p>Concluído</p>
+                </div>
             )}
         </div>
     );

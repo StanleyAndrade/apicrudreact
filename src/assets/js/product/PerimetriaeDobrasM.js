@@ -9,10 +9,10 @@ const PerimetriaeDobrasM = () => {
         
     <div>
         <h2 className="FM">Avaliação Masculina</h2>
-        <div className="divComponent-ProductAndCategory"> 
-            <div className="component1-ProductAndCategory"><CreatePreUser/></div>
-            <div className="component1-ProductAndCategory"><CreatePerimetria/></div>
-            <div className="component2-ProductAndCategory"><CreateDobrasCutaneasM/></div>
+        <div className="divComponent-PerimetriaeDobras">
+            <div className="component1-PerimetriaeDobras"><CreatePreUser/></div>
+            <div className="component1-PerimetriaeDobras"><CreatePerimetria/></div>
+            <div className="component2-PerimetriaeDobras"><CreateDobrasCutaneasM/></div>
         </div>
     </div>
     )

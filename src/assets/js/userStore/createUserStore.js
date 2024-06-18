@@ -20,26 +20,42 @@ const CreateUserStore = () => {
     const [imageKey, setImageKey] = useState('')
     const [selectedFile, setSelectedFile] = useState(null); //armazena o arquivo do upload
 
+    const [popUpPositivo, setpopUpPositivo] = useState("");
+    const [popUpNegativo, setpopUpNegativo] = useState("");
+
+
     // POST - Cria o usuário
     const createUserStore = (event) => {
         event.preventDefault()
-        axios.post("http://192.168.247.103:8080/userstore/criar", { name, endereco, phone, email, horarioDeFuncionamento, time, payment, nameperson, password, username, imageUrl, imageKey})
+        axios.post("http://15.228.166.75:8080/userstore/criar", { name, endereco, phone, email, horarioDeFuncionamento, time, payment, nameperson, password, username, imageUrl, imageKey})
           .then((response) => {
             console.log(response.data);
             console.log("Funcionou");
-            navigate('/')
+            setpopUpPositivo("Conta criada com sucesso!");
+            setTimeout(() => {
+                setpopUpPositivo("")// Oculta o popup após 4 segundos
+            }, 5000);
+            setTimeout(() => {
+                navigate('/login')// Navega após 3 segundos
+            }, 2500);
           })
           .catch((error) => {
             console.error(error.response.data);
             console.error("Deu erro", error);
+            setpopUpNegativo("Erro ao criar usuário!");
+            setTimeout(() => setpopUpNegativo(""), 4000); // Oculta o popup após 3 segundos
+            
         });
     };
+
+
+
 
     // PATCH - Edita apenas o imageKey e imageUrl no MongoDB
     const editImageProduct = async (url, key) => {
         try {
             const dataImage = {imageUrl: url, imageKey: key}
-            const response = await axios.patch('http://192.168.247.103:8080/protected/userstore/editar', dataImage,  {
+            const response = await axios.patch('http://15.228.166.75:8080/protected/userstore/editar', dataImage,  {
             headers: { Authorization: `${localStorage.getItem("token")}` }
             })
             console.log('Sucesso ao atualizar Imagem (url e key) no MongoDB')
@@ -51,7 +67,7 @@ const CreateUserStore = () => {
     // Delete - apaga a imagem do Amazon S3 
     const deleteImage = async () => {
         try {
-          const response = await axios.delete(`http://192.168.247.103:8080/delete/${imageKey}`)
+          const response = await axios.delete(`http://15.228.166.75:8080/delete/${imageKey}`)
           setImageUrl('')
           setImageKey('')
           editImageProduct('', '')
@@ -71,7 +87,7 @@ const CreateUserStore = () => {
             try {
               const formData = new FormData()
               formData.append('file', selectedFile)
-              const response = await axios.post('http://192.168.247.103:8080/upload', formData, {
+              const response = await axios.post('http://15.228.166.75:8080/upload', formData, {
                       headers: {'Content-Type': 'multipart/form-data',}
               });
               const newImageUrl = response.data.imageUrl
@@ -170,7 +186,7 @@ const CreateUserStore = () => {
                 <div className="textfield">
                     <label className="labelnome-createUserStore">Whatsapp</label><br/>
                     <input
-                        type="text"
+                        type="phone"
                         className="inputtext-createUserStore"
                         placeholder="(00) 0000-0000"
                         onChange={(e) => setPhone(e.target.value)}
@@ -180,7 +196,7 @@ const CreateUserStore = () => {
                 <div className="textfield">
                     <label className="labelnome-createUserStore"></label><br/>
                     <input
-                        type="text"
+                        type="email"
                         className="inputtext-createUserStore"
                         placeholder="Email"
                         onChange={(e) => setEmail(e.target.value)}
@@ -199,9 +215,18 @@ const CreateUserStore = () => {
 
                 <div className="divCreateButton-createUserStore">
                     <button onClick={createUserStore} className="button-createUserStore">Criar Conta</button>
-                    
                 </div>
             </form>
+            {popUpPositivo && (
+                <div className="popupPositivo">
+                    <p>{popUpPositivo}</p>
+                </div>
+            )}
+            {popUpNegativo && (
+                <div className="popupNegativo">
+                    <p>{popUpNegativo}</p>
+                </div>
+            )}
         </div>
     )
 }

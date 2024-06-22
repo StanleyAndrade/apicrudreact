@@ -12,7 +12,7 @@ const ListUser = () => {
   //os dados do get são passados pra setProducts e jogados pra products
   //para que products seja exibido no {products.map((product)
   const getUsers = () => {
-    axios.get("http://15.228.166.75:8080/user")
+    axios.get("https://api.fittreinoapp.com/user")
       .then((response) => {
         setUsers(response.data);
         console.log("Dados buscados com sucesso")

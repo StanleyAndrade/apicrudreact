@@ -105,7 +105,7 @@ const CreateCategoria = () => {
     // Função para deletar uma categoria
     const deleteCategoria = async (categoryId) => {
         try {
-            const response = await axios.delete(`http://15.228.166.75:8080/categoria/delete/${categoryId}`)
+            const response = await axios.delete(`https://api.fittreinoapp.com/categoria/delete/${categoryId}`)
             //getAllCategories()
             fetchUserData()
             console.log('Sucesso ao apagar categoria no MongoDB')

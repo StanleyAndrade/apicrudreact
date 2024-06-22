@@ -11,7 +11,7 @@ const CreateUser = () => {
 
     const createUser = (event) => {
         event.preventDefault()
-        axios.post("http://15.228.166.75:8080/register", { name, phone, nascimento, email, password})
+        axios.post("https://api.fittreinoapp.com/register", { name, phone, nascimento, email, password})
           .then((response) => {
             console.log(response.data);
             console.log("Funcionou"); 

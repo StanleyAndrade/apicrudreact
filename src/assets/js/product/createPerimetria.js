@@ -85,7 +85,7 @@ const CreatePerimetria = () => {
             const UserStoreid = localStorage.getItem('userStoreid')
 
             try {
-                const response = await axios.post('http://15.228.166.75:8080/perimetria/criar', { bracoRelaxadoEsquerdo, bracoRelaxadoDireito, bracoContraidoEsquerdo, bracoContraidoDireito, antebracoDireito, antebracoEsquerdo, pernaDireito, pernaEsquerdo, torax, abdomen, quadril, userid: Userid, storeid: UserStoreid})
+                const response = await axios.post('https://api.fittreinoapp.com/perimetria/criar', { bracoRelaxadoEsquerdo, bracoRelaxadoDireito, bracoContraidoEsquerdo, bracoContraidoDireito, antebracoDireito, antebracoEsquerdo, pernaDireito, pernaEsquerdo, torax, abdomen, quadril, userid: Userid, storeid: UserStoreid})
                 console.log('Perimetria cadastrada com sucesso');
                 setShowFormCreate(false);
             } catch (error) {

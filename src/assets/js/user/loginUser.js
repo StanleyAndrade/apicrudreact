@@ -11,7 +11,7 @@ const LoginUser = () => {
 
   
     const handleLogin = () => {
-      axios.post("http://15.228.166.75:8080/login", { email, password })
+      axios.post("https://api.fittreinoapp.com/login", { email, password })
         .then((response) => {
           setToken(response.data.token);
           setUserEmail(email);     

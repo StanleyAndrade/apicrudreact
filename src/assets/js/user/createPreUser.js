@@ -15,7 +15,7 @@ const CreatePreUser = () => {
     const createUser = async (event) => {
         event.preventDefault()
         try {
-            const response = await axios.post("http://15.228.166.75:8080/user/criar", { name, phone, email, password, username})
+            const response = await axios.post("https://api.fittreinoapp.com/user/criar", { name, phone, email, password, username})
             localStorage.setItem('AlunoUserName', name)
             localStorage.setItem('AlunoUserEmail', email)
             localStorage.setItem('AlunoUserid', response.data.user._id)
@@ -36,7 +36,7 @@ const CreatePreUser = () => {
         const email = checkEmail;
 
         try {
-            const response = await axios.get(`http://15.228.166.75:8080/user/${email}`);
+            const response = await axios.get(`https://api.fittreinoapp.com/user/${email}`);
             
             // Se o usuário foi encontrado, você pode acessar seus dados na resposta
             const userId = response.data.user._id;

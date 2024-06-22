@@ -8,7 +8,7 @@ const ResetPasswordRequest = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://15.228.166.75:8080/userstore/request-reset-password', { email });
+      const response = await axios.post('https://api.fittreinoapp.com/userstore/request-reset-password', { email });
       setMessage(response.data.message);
     } catch (error) {
       setMessage(error.response.data.message);

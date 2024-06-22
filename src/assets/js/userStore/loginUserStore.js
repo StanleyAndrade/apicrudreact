@@ -15,7 +15,7 @@ const LoginUserStore = () => {
 
     const handleLogin = async (event) => {
         try {
-            const response = await axios.post("http://15.228.166.75:8080/userstore/login", { email, password })
+            const response = await axios.post("https://api.fittreinoapp.com/userstore/login", { email, password })
             setToken(response.data.token)
             // Salva o token e o email no armazenamento local (localStorage)
             localStorage.setItem('token', response.data.token);

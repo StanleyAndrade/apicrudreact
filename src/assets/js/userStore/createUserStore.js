@@ -27,7 +27,7 @@ const CreateUserStore = () => {
     // POST - Cria o usuário
     const createUserStore = (event) => {
         event.preventDefault()
-        axios.post("http://15.228.166.75:8080/userstore/criar", { name, endereco, phone, email, horarioDeFuncionamento, time, payment, nameperson, password, username, imageUrl, imageKey})
+        axios.post("https://api.fittreinoapp.com/userstore/criar", { name, endereco, phone, email, horarioDeFuncionamento, time, payment, nameperson, password, username, imageUrl, imageKey})
           .then((response) => {
             console.log(response.data);
             console.log("Funcionou");
@@ -55,7 +55,7 @@ const CreateUserStore = () => {
     const editImageProduct = async (url, key) => {
         try {
             const dataImage = {imageUrl: url, imageKey: key}
-            const response = await axios.patch('http://15.228.166.75:8080/protected/userstore/editar', dataImage,  {
+            const response = await axios.patch('https://api.fittreinoapp.com/protected/userstore/editar', dataImage,  {
             headers: { Authorization: `${localStorage.getItem("token")}` }
             })
             console.log('Sucesso ao atualizar Imagem (url e key) no MongoDB')
@@ -67,7 +67,7 @@ const CreateUserStore = () => {
     // Delete - apaga a imagem do Amazon S3 
     const deleteImage = async () => {
         try {
-          const response = await axios.delete(`http://15.228.166.75:8080/delete/${imageKey}`)
+          const response = await axios.delete(`https://api.fittreinoapp.com/delete/${imageKey}`)
           setImageUrl('')
           setImageKey('')
           editImageProduct('', '')
@@ -87,7 +87,7 @@ const CreateUserStore = () => {
             try {
               const formData = new FormData()
               formData.append('file', selectedFile)
-              const response = await axios.post('http://15.228.166.75:8080/upload', formData, {
+              const response = await axios.post('https://api.fittreinoapp.com/upload', formData, {
                       headers: {'Content-Type': 'multipart/form-data',}
               });
               const newImageUrl = response.data.imageUrl

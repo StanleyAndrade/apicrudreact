@@ -12,7 +12,7 @@ const ListUserId = () => {
   const { id } = useParams()
   
   const getUser = () => {
-      axios.get(`http://15.228.166.75:8080/userstore/buscar/${id}`)
+      axios.get(`https://api.fittreinoapp.com/userstore/buscar/${id}`)
       .then((response) => {
           // Verifique se a resposta é um objeto ou uma array
           const userData = Array.isArray(response.data) ? response.data : [response.data];

@@ -48,7 +48,7 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.get("http://15.228.166.75:8080/protected/userstore/buscar", {
+                const response = await axios.get("https://api.fittreinoapp.com/protected/userstore/buscar", {
                     headers: { Authorization: `${localStorage.getItem("token")}` }
                 });
                 setUserData(response.data.userData);

@@ -7,7 +7,7 @@ const DisplayTreinos = () => {
     useEffect(() => {
         const fetchTreinos = async () => {
             try {
-                const response = await axios.get('http://15.228.166.75:8080/treino/buscar');
+                const response = await axios.get('https://api.fittreinoapp.com/treino/buscar');
                 setTreinos(response.data);
             } catch (error) {
                 console.error('Erro ao buscar treinos: ', error);

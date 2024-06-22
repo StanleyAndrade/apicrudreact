@@ -9,7 +9,7 @@ const Listarpedidosprivados = () => {
     const [pedido, setPedido] = useState([])
 
     const getPedidos = () => {
-        axios.get('http://15.228.166.75:8080/pedidos')
+        axios.get('https://api.fittreinoapp.com/pedidos')
         .then((response) => {
             setProducts(response.data);
             // Calcula o total ao carregar os pedidos
@@ -78,7 +78,7 @@ window.open(codigoTodo, '_self')
 
     //*===================== Delete - deletar item do carrinho =====================*
     const DeleteItem = (productId) => {
-        axios.delete(`http://15.228.166.75:8080/pedidos/${productId}`)
+        axios.delete(`https://api.fittreinoapp.com/pedidos/${productId}`)
         .then(() => {
             getPedidos()
             console.log('Item apagado com sucesso')
@@ -94,7 +94,7 @@ window.open(codigoTodo, '_self')
 
     //*===================== Delete - Esvaziar carrinho TODO =====================*
     const DeleteAll = () => {
-        axios.delete(`http://15.228.166.75:8080/pedidos`)
+        axios.delete(`https://api.fittreinoapp.com/pedidos`)
         .then(() => {
             getPedidos()
             console.log('Tudo apagado com sucesso')

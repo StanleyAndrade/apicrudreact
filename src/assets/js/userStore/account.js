@@ -36,7 +36,7 @@ const Account = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.get("http://15.228.166.75:8080/protected/userstore/buscar", {
+                const response = await axios.get("https://api.fittreinoapp.com/protected/userstore/buscar", {
                     headers: { Authorization: `${localStorage.getItem("token")}` }
                 });
                 localStorage.setItem('userStorename', response.data.userData.name)
@@ -64,7 +64,7 @@ const Account = () => {
     const handleUpdateUserData = async (event) => {
         event.preventDefault()
         try {
-            const response = await axios.patch("http://15.228.166.75:8080/protected/userstore/editar", newUserData, {
+            const response = await axios.patch("https://api.fittreinoapp.com/protected/userstore/editar", newUserData, {
                 headers: { Authorization: `${localStorage.getItem("token")}` }
             });
             setUserData(response.data.userData);
@@ -104,7 +104,7 @@ const Account = () => {
             try {
               const formData = new FormData()
               formData.append('file', selectedFile)
-              const response = await axios.post('http://15.228.166.75:8080/upload', formData, {
+              const response = await axios.post('https://api.fittreinoapp.com/upload', formData, {
                       headers: {'Content-Type': 'multipart/form-data',}
               });
               const newImageUrl = response.data.imageUrl
@@ -129,7 +129,7 @@ const Account = () => {
     const editImageProduct = async (url, key) => {
         try {
             const dataImage = {imageUrl: url, imageKey: key}
-            const response = await axios.patch('http://15.228.166.75:8080/protected/userstore/editar', dataImage,  {
+            const response = await axios.patch('https://api.fittreinoapp.com/protected/userstore/editar', dataImage,  {
             headers: { Authorization: `${localStorage.getItem("token")}` }
             })
             console.log('Sucesso ao atualizar Imagem (url e key) no MongoDB')
@@ -142,7 +142,7 @@ const Account = () => {
      //*===================== DELETE - Image =====================*
      const deleteImage = async () => {
         try {
-          const response = await axios.delete(`http://15.228.166.75:8080/delete/${userData.imageKey}`)
+          const response = await axios.delete(`https://api.fittreinoapp.com/delete/${userData.imageKey}`)
           setImageUrl('')
           setImageKey('')
           editImageProduct('', '')

@@ -29,7 +29,7 @@ const CreateTreino = () => {
             const Userid = localStorage.getItem('AlunoUserid');
             const UserStoreid = localStorage.getItem('userStoreid');
             try {
-                await axios.post('http://15.228.166.75:8080/treinogym/criar', { treino1, treino2, treino3, treino4, treino5, treino6, treino7});
+                await axios.post('https://api.fittreinoapp.com/treino/criar', { treino1, treino2, treino3, treino4, treino5, treino6, treino7});
                 console.log('Treino cadastrado com sucesso');
                 setpopUpPositivo("Treino criado com sucesso!");
                 setTimeout(() => {

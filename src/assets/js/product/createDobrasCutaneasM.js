@@ -13,7 +13,7 @@ const CreateDobrasCutaneas = () => {
     const [ coxa, setcoxa ] = useState('')
     const [ biciptal, setbiciptal ] = useState('')
     const [ axilarmedia, setaxilarmedia ] = useState('')
-    const [ panturrilhamedia, setpanturrilhamedia ] = useState('')
+    const [ panturrilhaMedia, setpanturrilhamedia ] = useState('')
     const [ resultadopercentualdegordura, setresultadopercentualdegordura ] = useState('')
     const [ pesoatual, setpesoatual ] = useState('')
     const [ pesogordo, setpesogordo ] = useState('')
@@ -58,9 +58,10 @@ Aluno: *${name}*
 *Peso Atual:* ${pesoatual}kg
 
 Resultado completo no site:
-http://www.192.168.247.103:3000/${username}
+https://user.fittreinoapp.com/${username}
 
-Compartilhe essa novidade. 
+Compartilhe seu resultado 
+com seus amigos!
 `;    
     
 //Transforma em texto de Whatsapp
@@ -104,7 +105,7 @@ window.open(codigoTodo, '_blank')
             const Userid = localStorage.getItem('AlunoUserid')
             const UserStoreid = localStorage.getItem('userStoreid')
                 try {
-                    const response = await axios.post('https://api.fittreinoapp.com/dobrascutaneas/criar', { subescapular, triciptal, abdominal, suprailiaca, peitoral, coxa, biciptal, axilarmedia, panturrilhamedia, somatoriodasdobras: somatorio7Dobras, resultadopercentualdegordura: G, pesoatual, pesogordo, pesomagro, pesoideal, idade, userid: Userid, storeid: UserStoreid})
+                    const response = await axios.post('https://api.fittreinoapp.com/dobrascutaneas/criar', { subescapular, triciptal, abdominal, suprailiaca, peitoral, coxa, biciptal, axilarmedia, panturrilhaMedia, somatoriodasdobras: somatorio7Dobras, resultadopercentualdegordura: G, pesoatual, pesogordo, pesomagro, pesoideal, idade, userid: Userid, storeid: UserStoreid})
                     console.log('Perimetria cadastrada com sucesso');
                     setShowFormCreate(false);
                 } catch (error) {
@@ -216,7 +217,7 @@ window.open(codigoTodo, '_blank')
                         className="inputtext-createProduct"
                         id="nome"
                         required
-                        value={panturrilhamedia}
+                        value={panturrilhaMedia}
                         onChange={(e) => setpanturrilhamedia(e.target.value )}
                     /><br />
 
